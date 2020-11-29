@@ -1,0 +1,61 @@
+<resources>
+    <string name="app_name">Weather</string>
+    <string name="avg_temp">Средняя температура за сезон: </string>
+    <string name="type_of_city">Тип города: </string>
+    <string name="btn_del">Удалить</string>
+    <string name="choose_month_and_temp">Выберите месяц и введите температуру:</string>
+    <string name="choose_type">Выберите тип города:</string>
+    <string name="enter_city">Введите город:</string>
+    <string name="data_edit">Редактировать данные</string>
+    <string name="empty_not_saved">Вы не ввели название города</string>
+    <string name="empty_exist">Город уже существует</string>
+
+    <string name="tv_filters">Фильтры</string>
+    <string name="tv_city">Город</string>
+    <string name="tv_season">Сезон</string>
+    <string name="tv_temp_scale">Шкала t°</string>
+    <string name="tv_result">Результат:</string>
+    <string name="tv_avg_temp">Средняя t°</string>
+    <string name="tv_type_of_city">Тип города</string>
+    <string name="btn_edit">Редактировать</string>
+    <string name="tv_city_list">Список городов</string>
+    <string name="btn_add">Добавить</string>
+    <string name="hint_enter_city">Введите название города</string>
+    <string name="btn_save">Сохранить</string>
+    <string name="btn_delete">Удалить</string>
+    <string name="et_temp">t°</string>
+
+    <string-array name="seasons">
+        <item>Зима</item>
+        <item>Весна</item>
+        <item>Лето</item>
+        <item>Осень</item>
+    </string-array>
+
+    <string-array name="type_city">
+        <item>Малый</item>
+        <item>Средний</item>
+        <item>Большой</item>
+    </string-array>
+
+    <string-array name="scale_of_temp">
+        <item>Цельсий</item>
+        <item>Фаренгейт</item>
+        <item>Кельвин</item>
+    </string-array>
+
+    <string-array name="month">
+        <item>Январь</item>
+        <item>Февраль</item>
+        <item>Март</item>
+        <item>Апрель</item>
+        <item>Май</item>
+        <item>Июнь</item>
+        <item>Июль</item>
+        <item>Август</item>
+        <item>Сентябрь</item>
+        <item>Октябрь</item>
+        <item>Ноябрь</item>
+        <item>Декабрь</item>
+    </string-array>
+</resources>
