@@ -24,6 +24,7 @@
     <string name="btn_save">Сохранить</string>
     <string name="btn_delete">Удалить</string>
     <string name="et_temp">t°</string>
+    <string name="city_name_hint">Название города</string>
 
     <string-array name="seasons">
         <item>Зима</item>

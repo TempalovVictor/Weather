@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,7 +15,8 @@ import com.tempvic.weather.DatabaseHelper;
 import com.tempvic.weather.MainApplication;
 import com.tempvic.weather.R;
 import com.tempvic.weather.dataUsage.CityItem;
-import com.tempvic.weather.dataUsage.DataCityAdapter;
+import com.tempvic.weather.dataUsage.DetailCityAdapter;
+import com.tempvic.weather.dataUsage.DetailCityItem;
 import com.tempvic.weather.database.CitiesInfoTable;
 
 import java.util.List;
@@ -49,22 +48,28 @@ public class DetailCityFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         RecyclerView recyclerView = getActivity().findViewById(R.id.rv_month_temp);
-
         DetailCityAdapter adapter = new DetailCityAdapter();
-
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
-/*        LinearLayout linLayout = getActivity().findViewById(R.id.ll_month_and_temp);
-        LayoutInflater ltInflater = getLayoutInflater();
-        View v = ltInflater.inflate(R.layout.month_and_temp, linLayout, false);
-
+        MainApplication.database.citiesInfoDao().deleteAllData();
+        new DatabaseHelper().fetchData();
+        List<CitiesInfoTable> units = MainApplication.database.citiesInfoDao().getAll();
         String[] month = getResources().getStringArray(R.array.month);
-        TextView monthName = v.findViewById(R.id.tv_month_name);
+
+        for (int i = 0; i < units.size(); i++) {
+            CitiesInfoTable table = units.get(i);
+            adapter.add(new DetailCityItem(month[i],table.getCityTemp()));
+        }
+
+        //String[] month = getResources().getStringArray(R.array.month);
+        //final int countOfMonth = 12;
+
+/*        TextView monthName = v.findViewById(R.id.tv_month_name);
 
         for (String s : month) {
-            monthName.setText(s);
+            adapter.
         }*/
     }
 }

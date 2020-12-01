@@ -10,6 +10,7 @@ public class CitiesInfoTable {
     public int cityId;
     public String cityName;
     public String cityType;
+    public String cityTemp;
     public String cityTempInJan;
     public String cityTempInFeb;
     public String cityTempInMar;
@@ -27,18 +28,23 @@ public class CitiesInfoTable {
         return cityName;
     }
 
+    public String getCityTemp() {
+        return cityTemp;
+    }
+
     @Ignore
     public CitiesInfoTable(String cityName) {
         this.cityName = cityName;
     }
 
-    public CitiesInfoTable(String cityName, String cityType, String cityTempInJan,
+    public CitiesInfoTable(String cityName, String cityType, String cityTemp, String cityTempInJan,
                            String cityTempInFeb, String cityTempInMar, String cityTempInApr,
                            String cityTempInMay, String cityTempInJun, String cityTempInJul,
                            String cityTempInAug, String cityTempInSept, String cityTempInOct,
                            String cityTempInNov, String cityTempInDec) {
         this.cityName = cityName;
         this.cityType = cityType;
+        this.cityTemp = cityTemp;
         this.cityTempInJan = cityTempInJan;
         this.cityTempInFeb = cityTempInFeb;
         this.cityTempInMar = cityTempInMar;
