@@ -19,8 +19,8 @@ public class DetailCityItem implements IBaseListItem{
         isSelected = selected;
     }
 
-    public DetailCityItem(String temperature) {
-        this.temperature = temperature;
+    public DetailCityItem(String month) {
+        this.month = month;
     }
 
     public DetailCityItem(String month, String temperature) {

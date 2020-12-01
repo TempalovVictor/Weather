@@ -10,7 +10,7 @@ public class CitiesInfoTable {
     public int cityId;
     public String cityName;
     public String cityType;
-    public String cityTemp;
+    public String cityTempScale;
     public String cityTempInJan;
     public String cityTempInFeb;
     public String cityTempInMar;
@@ -28,8 +28,8 @@ public class CitiesInfoTable {
         return cityName;
     }
 
-    public String getCityTemp() {
-        return cityTemp;
+    public String getCityTempScale() {
+        return cityTempScale;
     }
 
     @Ignore
@@ -37,14 +37,37 @@ public class CitiesInfoTable {
         this.cityName = cityName;
     }
 
-    public CitiesInfoTable(String cityName, String cityType, String cityTemp, String cityTempInJan,
+    @Ignore
+    public CitiesInfoTable(String cityName, String cityTempScale, String cityTempInJan,
+                           String cityTempInFeb, String cityTempInMar, String cityTempInApr,
+                           String cityTempInMay, String cityTempInJun, String cityTempInJul,
+                           String cityTempInAug, String cityTempInSept, String cityTempInOct,
+                           String cityTempInNov, String cityTempInDec) {
+        this.cityName = cityName;
+        this.cityTempScale = cityTempScale;
+        this.cityTempInJan = cityTempInJan;
+        this.cityTempInFeb = cityTempInFeb;
+        this.cityTempInMar = cityTempInMar;
+        this.cityTempInApr = cityTempInApr;
+        this.cityTempInMay = cityTempInMay;
+        this.cityTempInJun = cityTempInJun;
+        this.cityTempInJul = cityTempInJul;
+        this.cityTempInAug = cityTempInAug;
+        this.cityTempInSept = cityTempInSept;
+        this.cityTempInOct = cityTempInOct;
+        this.cityTempInNov = cityTempInNov;
+        this.cityTempInDec = cityTempInDec;
+    }
+
+    public CitiesInfoTable(String cityName, String cityType, String cityTempScale,
+                           String cityTempInJan,
                            String cityTempInFeb, String cityTempInMar, String cityTempInApr,
                            String cityTempInMay, String cityTempInJun, String cityTempInJul,
                            String cityTempInAug, String cityTempInSept, String cityTempInOct,
                            String cityTempInNov, String cityTempInDec) {
         this.cityName = cityName;
         this.cityType = cityType;
-        this.cityTemp = cityTemp;
+        this.cityTempScale = cityTempScale;
         this.cityTempInJan = cityTempInJan;
         this.cityTempInFeb = cityTempInFeb;
         this.cityTempInMar = cityTempInMar;
