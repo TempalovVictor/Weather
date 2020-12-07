@@ -27,6 +27,7 @@ public class CityListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_city_list, container, false);
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -36,7 +37,7 @@ public class CityListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
-        MainApplication.database.citiesInfoDao().deleteAllData();
+        //MainApplication.database.citiesInfoDao().deleteAllData();
         new DatabaseHelper().fetchData();
         List<CitiesInfoTable> units = MainApplication.database.citiesInfoDao().getAll();
 

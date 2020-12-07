@@ -19,12 +19,16 @@
     <string name="tv_type_of_city">Тип города</string>
     <string name="btn_edit">Редактировать</string>
     <string name="tv_city_list">Список городов</string>
-    <string name="btn_add">Добавить</string>
     <string name="hint_enter_city">Введите название города</string>
     <string name="btn_save">Сохранить</string>
-    <string name="btn_delete">Удалить</string>
+    <string name="btn_add">ADD</string>
+    <string name="btn_edit_city_data">EDIT</string>
+    <string name="btn_delete">DEL</string>
+
     <string name="et_temp">t°</string>
     <string name="city_name_hint">Название города</string>
+    <string name="temp_in_celsius">t° Цельсий</string>
+    <string name="month">Месяц</string>
 
     <string-array name="seasons">
         <item>Зима</item>

@@ -17,7 +17,7 @@ public class DataCityAdapter extends SimpleListAdapter {
 
     private SimpleListAdapter adapter;
 
-    private ICityItemCallback iCityItemInterface = new ICityItemCallback() {
+    private final ICityItemCallback iCityItemInterface = new ICityItemCallback() {
 
         @Override
         public void onTriggerItem(int idItem) {
@@ -45,9 +45,6 @@ public class DataCityAdapter extends SimpleListAdapter {
         if (holder instanceof CityViewHolder) {
             TextView nameTextView = ((CityViewHolder) holder).nameTextView;
             CityItem item = (CityItem) getItems().get(position);
-            //String nTextView = nameTextView.getText().toString();
-            //int cityId = MainApplication.database.citiesInfoDao().getId(nTextView);
-            //final int layoutId = item.getLayoutId();
             nameTextView.setText(item.getText());
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -57,14 +54,12 @@ public class DataCityAdapter extends SimpleListAdapter {
                     CityItem item = (CityItem) getItems().get(position);
                     //item.iCityItemInterface.onTriggerItem(item.idCityItem);
 
-                    ArrayList<IBaseListItem> items = getItems();
-                    for (int i = 0; i < items.size(); i++) {
-                        if (item.isSelected = false) {
-                            v.setBackgroundColor(Color.TRANSPARENT);
-                        } else {
-                            v.setBackgroundColor(Color.LTGRAY);
-                            item.isSelected = false;
-                        }
+                    if (!item.isSelected()) {
+                        v.setBackgroundColor(Color.LTGRAY);
+                        item.setSelected(true);
+                    } else {
+                        v.setBackgroundColor(Color.TRANSPARENT);
+                        item.setSelected(false);
                     }
                 }
             });

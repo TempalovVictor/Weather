@@ -1,7 +1,5 @@
 package com.tempvic.weather.dataUsage;
 
-import android.graphics.Color;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -51,25 +49,7 @@ public class DetailCityAdapter extends SimpleListAdapter {
             DetailCityItem item = (DetailCityItem) getItems().get(position);
             monthNameView.setText(item.getMonth());
             monthTempView.setText(item.getTemperature());
-
-/*            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    DetailCityItem item = (DetailCityItem) getItems().get(position);
-                    ArrayList<IBaseListItem> items = getItems();
-                    for (int i = 0; i < items.size(); i++) {
-                        if (item.isSelected = false) {
-                            v.setBackgroundColor(Color.TRANSPARENT);
-                        } else {
-                            v.setBackgroundColor(Color.LTGRAY);
-                            item.isSelected = false;
-                        }
-                    }
-                }
-            });*/
-        }
-        else {
+        } else {
             throw new IllegalStateException("Define new layout Id");
         }
     }

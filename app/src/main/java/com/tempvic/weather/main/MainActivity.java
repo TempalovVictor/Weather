@@ -24,19 +24,6 @@ public class MainActivity extends AppCompatActivity {
                 .addToBackStack("FilterFragment")
                 .commit();
 
-/*        RecyclerView recyclerView = findViewById(R.id.rvListOfCity);
-        DataCityAdapter adapter = new DataCityAdapter();
-        recyclerView.setAdapter(adapter);
-
-        MainApplication.database.citiesInfoDao().deleteAllData();
-        new DatabaseHelper().fetchData();
-        List<CitiesInfoTable> units = MainApplication.database.citiesInfoDao().getAll();
-
-        for (int i = 0; i < units.size(); i++) {
-            CitiesInfoTable table = units.get(i);
-            adapter.add(new CityItem(table.getCityName()));
-        }*/
-
         Resources res = getResources();
         String[] month = res.getStringArray(R.array.month);
     }
@@ -63,11 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
         if (getSupportFragmentManager().getBackStackEntryCount() == 0 || getSupportFragmentManager().getBackStackEntryCount() == 1) {
             finish();
         } else {
-            //getSupportFragmentManager().popBackStack();
             super.onBackPressed();
         }
     }

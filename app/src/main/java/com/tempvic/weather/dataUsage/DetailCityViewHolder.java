@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.tempvic.weather.R;
 
-public class DetailCityViewHolder extends RecyclerView.ViewHolder{
+public class DetailCityViewHolder extends RecyclerView.ViewHolder {
 
     TextView monthNameView;
     EditText monthTempView;
@@ -20,8 +20,4 @@ public class DetailCityViewHolder extends RecyclerView.ViewHolder{
         monthNameView = itemView.findViewById(R.id.tv_month_name);
         monthTempView = itemView.findViewById(R.id.et_month_temp);
     }
-
-/*    void bind(String listIndex) {
-        monthTempView.setText(String.valueOf(listIndex));
-    }*/
 }

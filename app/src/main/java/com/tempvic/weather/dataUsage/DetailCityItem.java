@@ -3,7 +3,7 @@ package com.tempvic.weather.dataUsage;
 import com.tempvic.weather.IDetailCityItemCallback;
 import com.tempvic.weather.R;
 
-public class DetailCityItem implements IBaseListItem{
+public class DetailCityItem implements IBaseListItem {
 
     IDetailCityItemCallback iDetailCityItemInterface;
     String month;

@@ -10,6 +10,14 @@ public class CityItem implements IBaseListItem {
     public Boolean isSelected = false;
     public int idCityItem;
 
+    public int getIdCityItem() {
+        return idCityItem;
+    }
+
+    public void setIdCityItem(int idCityItem) {
+        this.idCityItem = idCityItem;
+    }
+
     public boolean isSelected() {
         return isSelected;
     }
