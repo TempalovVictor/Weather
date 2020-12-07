@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,15 +13,26 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tempvic.weather.DatabaseHelper;
+import com.tempvic.weather.ICityItemCallback;
 import com.tempvic.weather.MainApplication;
 import com.tempvic.weather.R;
 import com.tempvic.weather.dataUsage.CityItem;
 import com.tempvic.weather.dataUsage.DataCityAdapter;
+import com.tempvic.weather.dataUsage.IBaseListItem;
+import com.tempvic.weather.dataUsage.SimpleListAdapter;
 import com.tempvic.weather.database.CitiesInfoTable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CityListFragment extends Fragment {
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        new DatabaseHelper().fetchData();
+        //TODO перенести в application
+    }
 
     @Nullable
     @Override
@@ -33,17 +45,56 @@ public class CityListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         RecyclerView recyclerView = getActivity().findViewById(R.id.rv_city_list);
-        DataCityAdapter adapter = new DataCityAdapter();
+        Button deleteButton = getActivity().findViewById(R.id.btn_del_city);
+
+        final ICityItemCallback iCityItemInterface = new ICityItemCallback() {
+
+            @Override
+            public void onTriggerItem(int idItem) {
+                SimpleListAdapter adapter = (SimpleListAdapter) recyclerView.getAdapter();
+                //var
+                ArrayList<IBaseListItem> items = adapter.getItems();
+                CityItem triggeredItem;
+                for (int i = 0; i < items.size(); i++) {
+                    CityItem currentItem = (CityItem) items.get(i);
+                    if (currentItem.idCityItem == idItem){
+                        triggeredItem = currentItem;
+                        triggeredItem.isSelected = !triggeredItem.isSelected;
+                    } else {
+                        currentItem.isSelected = false;
+                    }
+                }
+                //TODO спросить у Димы, там ли это должно быть)
+                deleteButton.setOnClickListener(new View.OnClickListener(){
+                    @Override
+                    public void onClick(View v) {
+                        for (int i = 0; i < items.size(); i++) {
+                            CityItem currentItem = (CityItem) items.get(i);
+                            if (currentItem.isSelected){
+                                adapter.remove(i);
+                                MainApplication.database.citiesInfoDao().deleteByCityId(currentItem.idCityItem);
+                                break;
+                            }
+                        }
+                    }
+                });
+                adapter.notifyDataSetChanged();
+            }
+        };
+
+        DataCityAdapter adapter = new DataCityAdapter(iCityItemInterface);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
         //MainApplication.database.citiesInfoDao().deleteAllData();
-        new DatabaseHelper().fetchData();
-        List<CitiesInfoTable> units = MainApplication.database.citiesInfoDao().getAll();
 
+        List<CitiesInfoTable> units = MainApplication.database.citiesInfoDao().getAll();
         for (int i = 0; i < units.size(); i++) {
             CitiesInfoTable table = units.get(i);
-            adapter.add(new CityItem(table.getCityName()));
+            CityItem item = new CityItem(table.getCityName(), table.getCityId());
+            adapter.add(item);
         }
+
+
     }
 }

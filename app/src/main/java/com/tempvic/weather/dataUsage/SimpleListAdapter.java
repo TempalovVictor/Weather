@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-abstract class SimpleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+public abstract class SimpleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         implements IBaseListAdapter {
     private final ArrayList<IBaseListItem> items = new ArrayList();
 
-    protected final ArrayList<IBaseListItem> getItems() {
+    public final ArrayList<IBaseListItem> getItems() {
         return this.items;
     }
 

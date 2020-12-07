@@ -24,6 +24,10 @@ public class CitiesInfoTable {
     public String cityTempInNov;
     public String cityTempInDec;
 
+    public int getCityId() {
+        return cityId;
+    }
+
     public String getCityName() {
         return cityName;
     }

@@ -31,6 +31,9 @@ public interface CitiesInfoDao {
     @Delete
     void delete(CitiesInfoTable citiesInfoTable);
 
+    @Query("DELETE FROM CitiesInfoTable WHERE cityId = :id")
+    void deleteByCityId(long id);
+
     @Query("DELETE FROM CitiesInfoTable")
     void deleteAllData();
 
