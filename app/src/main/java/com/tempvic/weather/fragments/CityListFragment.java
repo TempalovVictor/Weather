@@ -24,6 +24,7 @@ import com.tempvic.weather.database.CitiesInfoTable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class CityListFragment extends Fragment {
 
@@ -46,6 +47,7 @@ public class CityListFragment extends Fragment {
 
         RecyclerView recyclerView = getActivity().findViewById(R.id.rv_city_list);
         Button deleteButton = getActivity().findViewById(R.id.btn_del_city);
+        Button editButton = getActivity().findViewById(R.id.btn_edit_city);
 
         final ICityItemCallback iCityItemInterface = new ICityItemCallback() {
 
@@ -57,27 +59,13 @@ public class CityListFragment extends Fragment {
                 CityItem triggeredItem;
                 for (int i = 0; i < items.size(); i++) {
                     CityItem currentItem = (CityItem) items.get(i);
-                    if (currentItem.idCityItem == idItem){
+                    if (currentItem.idCityItem == idItem) {
                         triggeredItem = currentItem;
                         triggeredItem.isSelected = !triggeredItem.isSelected;
                     } else {
                         currentItem.isSelected = false;
                     }
                 }
-                //TODO спросить у Димы, там ли это должно быть)
-                deleteButton.setOnClickListener(new View.OnClickListener(){
-                    @Override
-                    public void onClick(View v) {
-                        for (int i = 0; i < items.size(); i++) {
-                            CityItem currentItem = (CityItem) items.get(i);
-                            if (currentItem.isSelected){
-                                adapter.remove(i);
-                                MainApplication.database.citiesInfoDao().deleteByCityId(currentItem.idCityItem);
-                                break;
-                            }
-                        }
-                    }
-                });
                 adapter.notifyDataSetChanged();
             }
         };
@@ -85,6 +73,44 @@ public class CityListFragment extends Fragment {
         DataCityAdapter adapter = new DataCityAdapter(iCityItemInterface);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+        ArrayList<IBaseListItem> items = adapter.getItems();
+
+        //TODO спросить у Димы, там ли это должно быть)
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < items.size(); i++) {
+                    CityItem currentItem = (CityItem) items.get(i);
+                    if (currentItem.isSelected) {
+                        adapter.remove(i);
+                        MainApplication.database.citiesInfoDao().deleteByCityId(currentItem.idCityItem);
+                        break;
+                    }
+                }
+            }
+        });
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DetailCityFragment fragment = new DetailCityFragment();
+                Bundle bundle = new Bundle();
+                for (int i = 0; i < items.size(); i++) {
+                    CityItem currentItem = (CityItem) items.get(i);
+                    if (currentItem.isSelected) {
+                        bundle.putInt("ID", currentItem.idCityItem);
+                        fragment.setArguments(bundle);
+                        Objects.requireNonNull(getActivity()).getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.container_fragment_root, fragment, "DetailCityFragment")
+                                .addToBackStack("DetailCityFragment")
+                                .commit();
+                        break;
+                    }
+                }
+
+            }
+        });
 
         //MainApplication.database.citiesInfoDao().deleteAllData();
 
@@ -94,7 +120,5 @@ public class CityListFragment extends Fragment {
             CityItem item = new CityItem(table.getCityName(), table.getCityId());
             adapter.add(item);
         }
-
-
     }
 }

@@ -6,12 +6,16 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
 public interface CitiesInfoDao {
     @Query("SELECT * FROM CitiesInfoTable")
     List<CitiesInfoTable> getAll();
+
+    @Query("SELECT * FROM CitiesInfoTable WHERE cityID = :id")
+    List<CitiesInfoTable> getAllByID(long id);
 
     @Query("SELECT * FROM CitiesInfoTable WHERE cityId = :id")
     CitiesInfoTable getById(long id);

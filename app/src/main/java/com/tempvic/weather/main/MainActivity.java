@@ -23,9 +23,6 @@ public class MainActivity extends AppCompatActivity {
                 .add(R.id.container_fragment_root, new FilterFragment(), "FilterFragment")
                 .addToBackStack("FilterFragment")
                 .commit();
-
-        Resources res = getResources();
-        String[] month = res.getStringArray(R.array.month);
     }
 
     public void onClickEdit(View view) {
