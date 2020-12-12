@@ -30,6 +30,7 @@ public class DetailCityFragment extends Fragment {
 
     public int getCityId;
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
