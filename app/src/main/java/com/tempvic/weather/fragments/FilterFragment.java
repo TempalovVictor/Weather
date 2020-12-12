@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +23,17 @@ public class FilterFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Button btn = view.findViewById(R.id.btn_edit);
+        btn.setOnClickListener(v -> {
+            CityListFragment fragment = new CityListFragment();
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container_fragment_root, fragment, "CityListFragment")
+                    .addToBackStack("CityListFragment")
+                    .commit();
+
+        });
     }
 
 }

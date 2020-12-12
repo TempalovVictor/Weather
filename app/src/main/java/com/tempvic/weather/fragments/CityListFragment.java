@@ -26,6 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static com.tempvic.weather.Const.DEFAULT_TABLE_INT;
+import static com.tempvic.weather.fragments.DetailCityFragment.ARGS_DETAIL_CITY_ID;
+
 public class CityListFragment extends Fragment {
 
     @Override
@@ -44,71 +47,18 @@ public class CityListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initUi();
+    }
 
+    private void initUi() {
         RecyclerView recyclerView = getActivity().findViewById(R.id.rv_city_list);
-        Button deleteButton = getActivity().findViewById(R.id.btn_del_city);
-        Button editButton = getActivity().findViewById(R.id.btn_edit_city);
-
-        final ICityItemCallback iCityItemInterface = new ICityItemCallback() {
-
-            @Override
-            public void onTriggerItem(int idItem) {
-                SimpleListAdapter adapter = (SimpleListAdapter) recyclerView.getAdapter();
-                ArrayList<IBaseListItem> items = adapter.getItems();
-                CityItem triggeredItem;
-                for (int i = 0; i < items.size(); i++) {
-                    CityItem currentItem = (CityItem) items.get(i);
-                    if (currentItem.idCityItem == idItem) {
-                        triggeredItem = currentItem;
-                        triggeredItem.isSelected = !triggeredItem.isSelected;
-                    } else {
-                        currentItem.isSelected = false;
-                    }
-                }
-                adapter.notifyDataSetChanged();
-            }
-        };
+        final ICityItemCallback iCityItemInterface = idItem -> handleSelectItems(recyclerView, idItem);
 
         DataCityAdapter adapter = new DataCityAdapter(iCityItemInterface);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-        ArrayList<IBaseListItem> items = adapter.getItems();
+        setListeners(adapter);
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for (int i = 0; i < items.size(); i++) {
-                    CityItem currentItem = (CityItem) items.get(i);
-                    if (currentItem.isSelected) {
-                        adapter.remove(i);
-                        MainApplication.database.citiesInfoDao().deleteByCityId(currentItem.idCityItem);
-                        break;
-                    }
-                }
-            }
-        });
-
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DetailCityFragment fragment = new DetailCityFragment();
-                Bundle bundle = new Bundle();
-                for (int i = 0; i < items.size(); i++) {
-                    CityItem currentItem = (CityItem) items.get(i);
-                    if (currentItem.isSelected) {
-                        bundle.putInt("ID", currentItem.idCityItem);
-                        fragment.setArguments(bundle);
-                        Objects.requireNonNull(getActivity()).getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.container_fragment_root, fragment, "DetailCityFragment")
-                                .addToBackStack("DetailCityFragment")
-                                .commit();
-                        break;
-                    }
-                }
-
-            }
-        });
 
         //MainApplication.database.citiesInfoDao().deleteAllData();
 
@@ -118,5 +68,73 @@ public class CityListFragment extends Fragment {
             CityItem item = new CityItem(table.getCityName(), table.getCityId());
             adapter.add(item);
         }
+    }
+
+    private void handleSelectItems(RecyclerView recyclerView, int idItem) {
+        SimpleListAdapter adapter = (SimpleListAdapter) recyclerView.getAdapter();
+        ArrayList<IBaseListItem> items = adapter.getItems();
+        CityItem triggeredItem;
+        for (int i = 0; i < items.size(); i++) {
+            CityItem currentItem = (CityItem) items.get(i);
+            if (currentItem.idCityItem == idItem) {
+                triggeredItem = currentItem;
+                triggeredItem.isSelected = !triggeredItem.isSelected;
+            } else {
+                currentItem.isSelected = false;
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
+
+    private void setListeners(DataCityAdapter adapter) {
+        ArrayList<IBaseListItem> items = adapter.getItems();
+
+        Button addCityButton = getActivity().findViewById(R.id.btn_add_city);
+        Button deleteButton = getActivity().findViewById(R.id.btn_del_city);
+        Button editButton = getActivity().findViewById(R.id.btn_edit_city);
+
+        addCityButton.setOnClickListener(v -> {
+            showDetailCityFragment(DEFAULT_TABLE_INT);
+        });
+
+        editButton.setOnClickListener(v -> {
+            int selectedItem = findSelectedItemId(items);
+            showDetailCityFragment(selectedItem);
+        });
+
+        deleteButton.setOnClickListener(v -> {
+            for (int i = 0; i < items.size(); i++) {
+                CityItem currentItem = (CityItem) items.get(i);
+                if (currentItem.isSelected) {
+                    adapter.remove(i);
+                    MainApplication.database.citiesInfoDao().deleteByCityId(currentItem.idCityItem);
+                    break;
+                }
+            }
+        });
+    }
+
+    private int findSelectedItemId(ArrayList<IBaseListItem> items) {
+        int selectedItem = DEFAULT_TABLE_INT;
+        for (int i = 0; i < items.size(); i++) {
+            CityItem currentItem = (CityItem) items.get(i);
+            if (currentItem.isSelected) {
+                selectedItem = currentItem.idCityItem;
+                break;
+            }
+        }
+        return selectedItem;
+    }
+
+    private void showDetailCityFragment(int selectedItem) {
+        DetailCityFragment fragment = new DetailCityFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(ARGS_DETAIL_CITY_ID, selectedItem);
+        fragment.setArguments(bundle);
+        Objects.requireNonNull(getActivity()).getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.container_fragment_root, fragment, "DetailCityFragment")
+                .addToBackStack("DetailCityFragment")
+                .commit();
     }
 }

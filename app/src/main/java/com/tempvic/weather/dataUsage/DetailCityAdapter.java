@@ -1,5 +1,7 @@
 package com.tempvic.weather.dataUsage;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,21 +17,6 @@ import java.util.ArrayList;
 public class DetailCityAdapter extends SimpleListAdapter {
 
     private static final int numberMonths = 12;
-
-    private SimpleListAdapter adapter;
-
-    private IDetailCityItemCallback iDetailCityItemInterface = new IDetailCityItemCallback() {
-
-        @Override
-        public void onTriggerItem(int idItem) {
-            ArrayList<IBaseListItem> items = adapter.getItems();
-            for (int i = 0; i < items.size(); i++) {
-                DetailCityItem item = (DetailCityItem) items.get(i);
-                item.isSelected = idItem == item.idDetailCityItem;
-            }
-            adapter.notifyDataSetChanged();
-        }
-    };
 
     @NonNull
     @Override
@@ -49,6 +36,23 @@ public class DetailCityAdapter extends SimpleListAdapter {
             DetailCityItem item = (DetailCityItem) getItems().get(position);
             monthNameView.setText(item.getMonth());
             monthTempView.setText(item.getTemperature());
+
+            monthTempView.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    item.setTemperature(s.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
         } else {
             throw new IllegalStateException("Define new layout Id");
         }

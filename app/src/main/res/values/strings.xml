@@ -49,7 +49,7 @@
         <item>Кельвин</item>
     </string-array>
 
-    <string-array name="month">
+    <string-array name="array_months">
         <item>Январь</item>
         <item>Февраль</item>
         <item>Март</item>

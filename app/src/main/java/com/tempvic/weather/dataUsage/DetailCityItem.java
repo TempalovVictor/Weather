@@ -1,15 +1,12 @@
 package com.tempvic.weather.dataUsage;
 
-import com.tempvic.weather.IDetailCityItemCallback;
 import com.tempvic.weather.R;
 
 public class DetailCityItem implements IBaseListItem {
 
-    IDetailCityItemCallback iDetailCityItemInterface;
     String month;
     String temperature;
     public Boolean isSelected = false;
-    public int idDetailCityItem;
 
     public boolean isSelected() {
         return isSelected;
@@ -19,23 +16,9 @@ public class DetailCityItem implements IBaseListItem {
         isSelected = selected;
     }
 
-    public DetailCityItem(String month) {
-        this.month = month;
-    }
-
     public DetailCityItem(String month, String temperature) {
         this.month = month;
         this.temperature = temperature;
-    }
-
-    public DetailCityItem(String month, String temperature, int idDetailCityItem) {
-        this.month = month;
-        this.temperature = temperature;
-        this.idDetailCityItem = idDetailCityItem;
-    }
-
-    public DetailCityItem(IDetailCityItemCallback iDetailCityItemInterface) {
-        this.iDetailCityItemInterface = iDetailCityItemInterface;
     }
 
     public String getMonth() {

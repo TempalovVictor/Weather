@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public abstract class SimpleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         implements IBaseListAdapter {
-    private final ArrayList<IBaseListItem> items = new ArrayList();
+    private final ArrayList<IBaseListItem> items = new ArrayList<IBaseListItem>();
 
     public final ArrayList<IBaseListItem> getItems() {
         return this.items;

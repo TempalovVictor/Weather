@@ -38,7 +38,6 @@
         android:layout_marginBottom="16dp"
         android:background="@null"
         android:drawableStart="@drawable/ic_add"
-        android:onClick="onClickAddCity"
         android:text="@string/btn_add"
         android:textSize="26sp"
         app:layout_constraintBottom_toBottomOf="parent"

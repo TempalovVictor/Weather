@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Entity;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -16,23 +17,17 @@ public interface CitiesInfoDao {
     @Query("SELECT * FROM CitiesInfoTable")
     List<CitiesInfoTable> getAll();
 
-    @Query("SELECT * FROM CitiesInfoTable WHERE cityID = :id")
-    List<CitiesInfoTable> getAllByID(long id);
-
     @Query("SELECT * FROM CitiesInfoTable WHERE cityId = :id")
     CitiesInfoTable getById(long id);
 
     @Query("SELECT cityId FROM CitiesInfoTable WHERE UPPER(cityName) = UPPER(:cityName)")
     int getId(String cityName);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(CitiesInfoTable citiesInfoTable);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertList(Iterable<CitiesInfoTable> citiesInfoTables);
-
-    @Update
-    void update(CitiesInfoTable citiesInfoTable);
 
     @Delete
     void delete(CitiesInfoTable citiesInfoTable);

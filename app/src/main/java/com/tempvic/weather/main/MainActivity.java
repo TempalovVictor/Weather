@@ -17,31 +17,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        startFirstFragment();
+    }
 
+    private void startFirstFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.container_fragment_root, new FilterFragment(), "FilterFragment")
                 .addToBackStack("FilterFragment")
-                .commit();
-    }
-
-    public void onClickEdit(View view) {
-        CityListFragment fragment = new CityListFragment();
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container_fragment_root, fragment, "CityListFragment")
-                .addToBackStack("CityListFragment")
-                .commit();
-    }
-
-    public void onClickAddCity(View view) {
-        DetailCityFragment fragment = new DetailCityFragment();
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container_fragment_root, fragment, "DetailCityFragment")
-                .addToBackStack("DetailCityFragment")
                 .commit();
     }
 

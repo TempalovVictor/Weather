@@ -12,9 +12,9 @@
         android:id="@+id/tv_filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:text="@string/tv_filters"
-        android:textSize="40sp"
+        android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,10 +23,10 @@
         android:id="@+id/tv_city"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:text="@string/tv_city"
-        android:textSize="30sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_filter" />
 
@@ -34,21 +34,22 @@
         android:id="@+id/sp_city"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:textSize="40sp"
-        android:gravity="end"
         android:layout_gravity="center_vertical|end"
+        android:layout_marginEnd="16dp"
+        android:gravity="end"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_city"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_city" />
 
     <TextView
         android:id="@+id/tv_season"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:text="@string/tv_season"
-        android:textSize="30sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_city" />
 
@@ -56,22 +57,23 @@
         android:id="@+id/sp_season"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:entries="@array/seasons"
         android:layout_gravity="center_vertical|end"
+        android:layout_marginEnd="16dp"
+        android:entries="@array/seasons"
         android:gravity="end"
-        android:textSize="40sp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_season"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_season" />
 
     <TextView
         android:id="@+id/tv_temp_scale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:text="@string/tv_temp_scale"
-        android:textSize="30sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_season" />
 
@@ -79,13 +81,14 @@
         android:id="@+id/sp_temp_scale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:textSize="40sp"
-        android:gravity="end"
         android:layout_gravity="center_vertical|end"
+        android:layout_marginEnd="16dp"
         android:entries="@array/scale_of_temp"
+        android:gravity="end"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_temp_scale"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_temp_scale" />
 
     <TextView
         android:id="@+id/tv_result"
@@ -93,7 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:text="@string/tv_result"
-        android:textSize="40sp"
+        android:textSize="26sp"
         android:gravity="end"
         app:layout_constraintBottom_toTopOf="@+id/btn_edit"
         app:layout_constraintEnd_toEndOf="parent"
@@ -105,10 +108,10 @@
         android:id="@+id/tv_temp_avg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginBottom="24dp"
         android:text="@string/tv_avg_temp"
-        android:textSize="30sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/tv_city_type"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -116,10 +119,10 @@
         android:id="@+id/tv_city_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginBottom="32dp"
         android:text="@string/tv_type_of_city"
-        android:textSize="30sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_edit"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -145,12 +148,13 @@
 
     <Button
         android:id="@+id/btn_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
-        android:onClick="onClickEdit"
         android:text="@string/btn_edit"
-        android:textSize="35sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
