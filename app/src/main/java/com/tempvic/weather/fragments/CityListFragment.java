@@ -54,7 +54,6 @@ public class CityListFragment extends Fragment {
             @Override
             public void onTriggerItem(int idItem) {
                 SimpleListAdapter adapter = (SimpleListAdapter) recyclerView.getAdapter();
-                //var
                 ArrayList<IBaseListItem> items = adapter.getItems();
                 CityItem triggeredItem;
                 for (int i = 0; i < items.size(); i++) {
@@ -75,7 +74,6 @@ public class CityListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         ArrayList<IBaseListItem> items = adapter.getItems();
 
-        //TODO спросить у Димы, там ли это должно быть)
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

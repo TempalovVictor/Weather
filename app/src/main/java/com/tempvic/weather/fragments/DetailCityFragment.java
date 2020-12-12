@@ -70,7 +70,7 @@ public class DetailCityFragment extends Fragment {
 
         String[] month = getResources().getStringArray(R.array.month);
 
-        if(getCityId != 0) {
+        if (getCityId != 0) {
             List<CitiesInfoTable> units = MainApplication.database.citiesInfoDao().getAllByID(getCityId);
             for (int i = 0; i < units.size(); i++) {
                 CitiesInfoTable table = units.get(i);
@@ -78,7 +78,7 @@ public class DetailCityFragment extends Fragment {
                 String cityName = etCityName.toString();
                 String[] temp = table.getMonthTemp();
                 for (int с = 0; с < 12; с++) {
-                    adapter.add(new DetailCityItem(month[с],temp[с]));
+                    adapter.add(new DetailCityItem(month[с], temp[с]));
                 }
 /*                CitiesInfoTable citiesInfoTable = new CitiesInfoTable(cityName,
                         //cityTempScale,
@@ -88,7 +88,6 @@ public class DetailCityFragment extends Fragment {
                 MainApplication.database.citiesInfoDao().insert(citiesInfoTable);*/
             }
         }
-
 
         for (int i = 0; i < 12; i++) {
             adapter.add(new DetailCityItem(month[i]));
@@ -121,15 +120,41 @@ public class DetailCityFragment extends Fragment {
                     Toast toast = Toast.makeText(getContext(),
                             "Ошибка! Город уже добавлен.", Toast.LENGTH_SHORT);
                     toast.show();
-                } else if (cities.contains(cityName) && getCityId != 0){
-                    Toast toast = Toast.makeText(getContext(),
-                            "Изменения внесены!", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
-                else if (cityName.equals("")) {
+                } else if (cityName.equals("")) {
                     Toast toast = Toast.makeText(getContext(),
                             "Ошибка! Введите название города.", Toast.LENGTH_SHORT);
                     toast.show();
+                } else if (cities.contains(cityName) && getCityId != 0) {
+                    for (int i = 0; i < recyclerView.getChildCount(); i++) {
+                        EditText et2 = recyclerView.getChildAt(i).findViewById(R.id.et_month_temp);
+                        String temperature = et2.getText().toString();
+                        temps[i] = temperature;
+                    }
+
+                    boolean tempEmpty = false;
+
+                    for (String temp : temps) {
+                        if (temp == null || temp.isEmpty()) {
+                            Toast toast = Toast.makeText(getContext(),
+                                    "Ошибка! Заполните значения температур для каждового месяца.", Toast.LENGTH_SHORT);
+                            toast.show();
+                            tempEmpty = true;
+                            break;
+                        }
+                    }
+
+                    if (!tempEmpty) {
+                        CitiesInfoTable citiesInfoTable = new CitiesInfoTable(cityName,
+                                //cityTempScale,
+                                temps[0], temps[1], temps[2], temps[3], temps[4], temps[5], temps[6], temps[7],
+                                temps[8], temps[9], temps[10], temps[11]);
+                        //TODO Update не работает
+                        MainApplication.database.citiesInfoDao().update(citiesInfoTable);
+
+                        Toast toast = Toast.makeText(getContext(),
+                                "Изменения внесены!", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
                 } else {
                     for (int i = 0; i < recyclerView.getChildCount(); i++) {
                         EditText et2 = recyclerView.getChildAt(i).findViewById(R.id.et_month_temp);

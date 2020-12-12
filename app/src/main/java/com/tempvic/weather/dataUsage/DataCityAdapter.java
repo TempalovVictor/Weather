@@ -15,7 +15,6 @@ public class DataCityAdapter extends SimpleListAdapter {
 
     private final ICityItemCallback iCityItemInterface;
 
-    //CTRL+ALT+O
     public DataCityAdapter(ICityItemCallback iCityItemInterface) {
         this.iCityItemInterface = iCityItemInterface;
     }
