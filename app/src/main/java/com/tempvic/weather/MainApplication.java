@@ -24,6 +24,7 @@ public class MainApplication extends Application {
                         "cityInfoDatabase"
                 )
                 .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
                 .build();
     }
 }
