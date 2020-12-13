@@ -1,5 +1,7 @@
 package com.tempvic.weather.dataUsage;
 
+import android.widget.Spinner;
+
 import com.tempvic.weather.ICityItemCallback;
 import com.tempvic.weather.R;
 
@@ -9,6 +11,15 @@ public class CityItem implements IBaseListItem {
     String text;
     public Boolean isSelected = false;
     public int idCityItem;
+    public Spinner cityType;
+
+    public Spinner getCityType() {
+        return cityType;
+    }
+
+    public void setCityType(Spinner cityType) {
+        this.cityType = cityType;
+    }
 
     public int getIdCityItem() {
         return idCityItem;

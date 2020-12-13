@@ -1,5 +1,7 @@
 package com.tempvic.weather.database;
 
+import android.widget.Spinner;
+
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -15,6 +17,9 @@ public interface CitiesInfoDao {
 
     @Query("SELECT * FROM CitiesInfoTable WHERE cityId = :id")
     CitiesInfoTable getById(long id);
+
+    @Query("SELECT cityType FROM CitiesInfoTable WHERE cityId = :id")
+    String getCityTypeById(long id);
 
     @Query("SELECT cityId FROM CitiesInfoTable WHERE UPPER(cityName) = UPPER(:cityName)")
     int getId(String cityName);

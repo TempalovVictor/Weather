@@ -1,10 +1,15 @@
 package com.tempvic.weather.fragments;
 
+import android.app.Application;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -59,7 +64,6 @@ public class CityListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         setListeners(adapter);
 
-
         //MainApplication.database.citiesInfoDao().deleteAllData();
 
         List<CitiesInfoTable> units = MainApplication.database.citiesInfoDao().getAll();
@@ -99,7 +103,13 @@ public class CityListFragment extends Fragment {
 
         editButton.setOnClickListener(v -> {
             int selectedItem = findSelectedItemId(items);
-            showDetailCityFragment(selectedItem);
+            if(selectedItem != 0){
+                showDetailCityFragment(selectedItem);
+            } else {
+                Toast toast = Toast.makeText(getContext(),
+                        "Ошибка! Для редактирования выберите город из списка", Toast.LENGTH_SHORT);
+                toast.show();
+            }
         });
 
         deleteButton.setOnClickListener(v -> {

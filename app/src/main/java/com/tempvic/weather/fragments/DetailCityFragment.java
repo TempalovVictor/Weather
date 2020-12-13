@@ -23,6 +23,7 @@ import com.tempvic.weather.dataUsage.IBaseListItem;
 import com.tempvic.weather.database.CitiesInfoTable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.tempvic.weather.Const.DEFAULT_STRING;
 import static com.tempvic.weather.Const.DEFAULT_TABLE_INT;
@@ -44,7 +45,6 @@ public class DetailCityFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_detail_city, container, false);
-        //
     }
 
     @Override
@@ -79,7 +79,7 @@ public class DetailCityFragment extends Fragment {
     private void initItems(DetailCityAdapter adapter, CitiesInfoTable units) {
 
         String[] monthArray = getResources().getStringArray(R.array.array_months);
-        if (units.getMonthTemp().length == 0) {
+        if (units == null || units.getMonthTemp().length == 0) {
             for (int i = 0; i < 12; i++) {
                 adapter.add(new DetailCityItem(monthArray[i], DEFAULT_STRING));
             }
@@ -94,15 +94,26 @@ public class DetailCityFragment extends Fragment {
 
         String cityName = etCityName.getText().toString();
 
-        if (TextUtils.isEmpty(cityName)) {
-            showMessage("Заполните название города");
-        } else {
+        List<CitiesInfoTable> units = MainApplication.database.citiesInfoDao().getAll();
 
+        ArrayList<String> cities = new ArrayList<>();
+
+        for (int i = 0; i < units.size(); i++) {
+            CitiesInfoTable table = units.get(i);
+            String tableCityName = table.getCityName().replaceAll("[^a-zA-Z-а-яёА-ЯЁ]+", "").toUpperCase();
+            cities.add(tableCityName);
+        }
+
+        if (TextUtils.isEmpty(cityName)) {
+            showMessage("Ошибка! Введите название города");
+        } else if (cities.contains(cityName.replaceAll("[^a-zA-Z-а-яёА-ЯЁ]+", "").toUpperCase())) {
+            showMessage("Ошибка! Город с таким названием уже есть");
+        } else {
             DetailCityAdapter adapter = (DetailCityAdapter) recyclerView.getAdapter();
             ArrayList<DetailCityItem> allMonthItems = tryGetAllMonthItems(adapter);
 
             if (allMonthItems.size() == 0) {
-                showMessage("Заполните температуры");
+                showMessage("Ошибка! Заполните значения температур для каждового месяца");
             } else {
                 CitiesInfoTable citiesInfoTable = new CitiesInfoTable(
                         detailCityId,

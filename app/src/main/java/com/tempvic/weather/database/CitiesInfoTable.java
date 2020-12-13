@@ -97,6 +97,12 @@ public class CitiesInfoTable {
         this.cityTempInDec = cityTempInDec;
     }
 
+    @Ignore
+    public CitiesInfoTable(int cityId, String cityType) {
+        this.cityId = cityId;
+        this.cityType = cityType;
+    }
+
     public CitiesInfoTable() {
     }
 

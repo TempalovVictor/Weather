@@ -1,6 +1,7 @@
 package com.tempvic.weather.dataUsage;
 
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,10 +12,12 @@ import com.tempvic.weather.R;
 public class CityViewHolder extends RecyclerView.ViewHolder {
 
     TextView nameTextView;
+    Spinner typeCity;
 
     public CityViewHolder(@NonNull View itemView) {
         super(itemView);
 
         nameTextView = itemView.findViewById(R.id.city_info_value);
+        typeCity = itemView.findViewById(R.id.sp_type_city);
     }
 }

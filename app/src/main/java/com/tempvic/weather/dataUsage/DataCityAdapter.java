@@ -1,15 +1,27 @@
 package com.tempvic.weather.dataUsage;
 
+import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tempvic.weather.ICityItemCallback;
+import com.tempvic.weather.MainApplication;
 import com.tempvic.weather.R;
+import com.tempvic.weather.database.CitiesInfoTable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataCityAdapter extends SimpleListAdapter {
 
@@ -35,6 +47,27 @@ public class DataCityAdapter extends SimpleListAdapter {
             TextView nameTextView = ((CityViewHolder) holder).nameTextView;
             CityItem item = (CityItem) getItems().get(position);
             nameTextView.setText(item.getText());
+            Spinner typeCity = ((CityViewHolder) holder).typeCity;
+            int idCityItem = item.getIdCityItem();
+
+            ArrayAdapter<?> adapter =
+                    ArrayAdapter.createFromResource(((CityViewHolder) holder).typeCity.getContext(), R.array.type_city, android.R.layout.simple_spinner_item);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            typeCity.setAdapter(adapter);
+
+            ((CityViewHolder) holder).typeCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    String res = changeTypeCity(idCityItem);
+                    item.setCityType(typeCity);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -50,5 +83,9 @@ public class DataCityAdapter extends SimpleListAdapter {
         } else {
             throw new IllegalStateException("Define new layout Id");
         }
+    }
+
+    public String changeTypeCity (int idItem) {
+        return MainApplication.database.citiesInfoDao().getCityTypeById(idItem);
     }
 }
