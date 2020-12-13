@@ -47,6 +47,34 @@ public class CitiesInfoTable {
     public CitiesInfoTable(
             int cityId,
             String cityName,
+            String cityType,
+            String cityTempInJan,
+            String cityTempInFeb, String cityTempInMar, String cityTempInApr,
+            String cityTempInMay, String cityTempInJun, String cityTempInJul,
+            String cityTempInAug, String cityTempInSept, String cityTempInOct,
+            String cityTempInNov, String cityTempInDec
+    ) {
+        this.cityId = cityId;
+        this.cityName = cityName;
+        this.cityType = cityType;
+        this.cityTempInJan = cityTempInJan;
+        this.cityTempInFeb = cityTempInFeb;
+        this.cityTempInMar = cityTempInMar;
+        this.cityTempInApr = cityTempInApr;
+        this.cityTempInMay = cityTempInMay;
+        this.cityTempInJun = cityTempInJun;
+        this.cityTempInJul = cityTempInJul;
+        this.cityTempInAug = cityTempInAug;
+        this.cityTempInSept = cityTempInSept;
+        this.cityTempInOct = cityTempInOct;
+        this.cityTempInNov = cityTempInNov;
+        this.cityTempInDec = cityTempInDec;
+    }
+
+    @Ignore
+    public CitiesInfoTable(
+            int cityId,
+            String cityName,
             String cityTempInJan,
             String cityTempInFeb, String cityTempInMar, String cityTempInApr,
             String cityTempInMay, String cityTempInJun, String cityTempInJul,
@@ -72,8 +100,7 @@ public class CitiesInfoTable {
     public CitiesInfoTable() {
     }
 
-
-    String temperatures;
+/*    String temperatures;
 
     public void setTemperatures(
             String cityTempInJan,
@@ -82,10 +109,13 @@ public class CitiesInfoTable {
             String cityTempInAug, String cityTempInSept, String cityTempInOct,
             String cityTempInNov, String cityTempInDec) {
 
-        this.temperatures = cityTempInJan + "/" + cityTempInFeb; // e.t.c
+        this.temperatures = cityTempInJan + "/" + cityTempInFeb + "/" + cityTempInMar
+                + "/" + cityTempInApr + "/" + cityTempInMay + "/" + cityTempInJun
+                + "/" + cityTempInJul + "/" + cityTempInAug + "/" + cityTempInSept
+                + "/" + cityTempInOct + "/" + cityTempInNov + "/" + cityTempInDec;
     }
 
     public String[] getTemperatures() {
         return temperatures.split("/");
-    }
+    }*/
 }

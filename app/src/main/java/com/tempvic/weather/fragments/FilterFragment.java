@@ -32,8 +32,6 @@ public class FilterFragment extends Fragment {
                     .replace(R.id.container_fragment_root, fragment, "CityListFragment")
                     .addToBackStack("CityListFragment")
                     .commit();
-
         });
     }
-
 }

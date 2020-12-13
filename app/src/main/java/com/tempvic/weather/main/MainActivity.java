@@ -2,13 +2,9 @@ package com.tempvic.weather.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.view.View;
 
 import com.tempvic.weather.R;
-import com.tempvic.weather.fragments.CityListFragment;
-import com.tempvic.weather.fragments.DetailCityFragment;
 import com.tempvic.weather.fragments.FilterFragment;
 
 public class MainActivity extends AppCompatActivity {
