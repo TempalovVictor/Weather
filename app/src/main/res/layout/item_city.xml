@@ -14,12 +14,4 @@
         android:hint="@string/city_name_hint"
         android:textSize="30sp" />
 
-    <Spinner
-        android:textAlignment="textEnd"
-        android:layout_gravity="center|end"
-        android:id="@+id/sp_type_city"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
-
 </LinearLayout>

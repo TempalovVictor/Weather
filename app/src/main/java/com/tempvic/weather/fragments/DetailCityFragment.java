@@ -5,8 +5,10 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,6 +25,7 @@ import com.tempvic.weather.dataUsage.IBaseListItem;
 import com.tempvic.weather.database.CitiesInfoTable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.tempvic.weather.Const.DEFAULT_STRING;
@@ -53,7 +56,15 @@ public class DetailCityFragment extends Fragment {
 
         CitiesInfoTable cityDetail = MainApplication.database.citiesInfoDao().getById(detailCityId);
         EditText cityName = view.findViewById(R.id.et_city_name);
-        setCityName(cityName, cityDetail);
+        Spinner cityType = view.findViewById(R.id.sp_type_city);
+
+        ArrayAdapter<?> adapterSpinner =
+                ArrayAdapter.createFromResource(getContext(), R.array.type_city, android.R.layout.simple_spinner_item);
+        adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        cityType.setAdapter(adapterSpinner);
+
+        setCityName(cityDetail, cityName, cityType);
 
         Button buttonSave = view.findViewById(R.id.btn_save);
 
@@ -65,14 +76,18 @@ public class DetailCityFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         initItems(adapter, cityDetail);
-        buttonSave.setOnClickListener(v -> handleOnClickSave(cityName, recyclerView));
+        buttonSave.setOnClickListener(v -> handleOnClickSave(cityName, cityType, recyclerView));
     }
 
-    private void setCityName(EditText cityName, CitiesInfoTable units) {
+    private void setCityName(CitiesInfoTable units, EditText cityName, Spinner cityType) {
         if (detailCityId == DEFAULT_TABLE_INT) {
             cityName.setText(DEFAULT_STRING);
         } else {
             cityName.setText(units.getCityName());
+            List arrayType = Arrays.asList(getResources().getStringArray(R.array.type_city));
+            String cityTypeFromDb = units.getCityType();
+            int position = arrayType.indexOf(cityTypeFromDb);
+            cityType.setSelection(position);
         }
     }
 
@@ -90,9 +105,10 @@ public class DetailCityFragment extends Fragment {
         }
     }
 
-    private void handleOnClickSave(EditText etCityName, RecyclerView recyclerView) {
+    private void handleOnClickSave(EditText etCityName, Spinner spCityType, RecyclerView recyclerView) {
 
         String cityName = etCityName.getText().toString();
+        String cityType = spCityType.getSelectedItem().toString();
 
         List<CitiesInfoTable> units = MainApplication.database.citiesInfoDao().getAll();
 
@@ -106,7 +122,7 @@ public class DetailCityFragment extends Fragment {
 
         if (TextUtils.isEmpty(cityName)) {
             showMessage("Ошибка! Введите название города");
-        } else if (cities.contains(cityName.replaceAll("[^a-zA-Z-а-яёА-ЯЁ]+", "").toUpperCase())) {
+        } else if (detailCityId == 0 && cities.contains(cityName.replaceAll("[^a-zA-Z-а-яёА-ЯЁ]+", "").toUpperCase())) {
             showMessage("Ошибка! Город с таким названием уже есть");
         } else {
             DetailCityAdapter adapter = (DetailCityAdapter) recyclerView.getAdapter();
@@ -118,6 +134,7 @@ public class DetailCityFragment extends Fragment {
                 CitiesInfoTable citiesInfoTable = new CitiesInfoTable(
                         detailCityId,
                         cityName,
+                        cityType,
                         allMonthItems.get(0).getTemperature(),
                         allMonthItems.get(1).getTemperature(),
                         allMonthItems.get(2).getTemperature(),
@@ -136,6 +153,10 @@ public class DetailCityFragment extends Fragment {
 
                 String completeMessage = detailCityId == DEFAULT_TABLE_INT ? "Новый город создан" : "Город обновлен";
                 showMessage(completeMessage);
+
+                if (detailCityId == DEFAULT_TABLE_INT) {
+                    detailCityId = MainApplication.database.citiesInfoDao().getId(cityName);
+                }
             }
         }
     }

@@ -31,6 +31,10 @@ public class CitiesInfoTable {
         return cityName;
     }
 
+    public String getCityType() {
+        return cityType;
+    }
+
     public String[] getMonthTemp() {
 
         return new String[]{
