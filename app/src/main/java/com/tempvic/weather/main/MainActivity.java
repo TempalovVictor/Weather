@@ -5,9 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.view.WindowManager;
-
-import com.tempvic.weather.BuildConfig;
 import com.tempvic.weather.R;
 import com.tempvic.weather.fragments.FilterFragment;
 

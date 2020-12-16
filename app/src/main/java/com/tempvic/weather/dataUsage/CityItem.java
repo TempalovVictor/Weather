@@ -13,7 +13,7 @@ public class CityItem implements IBaseListItem {
     public int idCityItem;
     public Spinner cityType;
 
-    public Spinner getCityType() {
+/*    public Spinner getCityType() {
         return cityType;
     }
 
@@ -39,24 +39,24 @@ public class CityItem implements IBaseListItem {
 
     public CityItem(String text) {
         this.text = text;
-    }
+    }*/
 
     public CityItem(String text, int idCityItem) {
         this.text = text;
         this.idCityItem = idCityItem;
     }
 
-    public CityItem(ICityItemCallback iCityItemInterface) {
+/*    public CityItem(ICityItemCallback iCityItemInterface) {
         this.iCityItemInterface = iCityItemInterface;
-    }
+    }*/
 
     public String getText() {
         return text;
     }
 
-    public void setText(String text) {
+/*    public void setText(String text) {
         this.text = text;
-    }
+    }*/
 
     @Override
     public int getLayoutId() {

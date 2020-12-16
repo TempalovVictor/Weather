@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tempvic.weather.DatabaseHelper;
 import com.tempvic.weather.ICityItemCallback;
 import com.tempvic.weather.MainApplication;
 import com.tempvic.weather.R;
@@ -57,8 +56,6 @@ public class CityListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
         setListeners(adapter);
-
-        //MainApplication.database.citiesInfoDao().deleteAllData();
 
         List<CitiesInfoTable> units = MainApplication.database.citiesInfoDao().getAll();
         for (int i = 0; i < units.size(); i++) {

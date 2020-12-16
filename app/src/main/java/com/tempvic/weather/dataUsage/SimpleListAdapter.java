@@ -37,7 +37,7 @@ public abstract class SimpleListAdapter extends RecyclerView.Adapter<RecyclerVie
         this.notifyDataSetChanged();
     }
 
-    public void add(ArrayList<IBaseListItem> newItems) {
+/*    public void add(ArrayList<IBaseListItem> newItems) {
         for (IBaseListItem newItem : newItems) {
             this.items.add(newItem);
             this.notifyDataSetChanged();
@@ -52,7 +52,7 @@ public abstract class SimpleListAdapter extends RecyclerView.Adapter<RecyclerVie
     public void clearAll() {
         this.items.clear();
         this.notifyDataSetChanged();
-    }
+    }*/
 
     public void remove(int position) {
         this.items.remove(position);

@@ -83,7 +83,6 @@ public class TempsByMonth {
     @ColumnInfo(name = "cityTempInNov")
     public String cityTempInNov;
 
-
     public String getCityTempInNov() {
         return cityTempInNov;
     }

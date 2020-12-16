@@ -25,11 +25,14 @@ public interface CitiesInfoDao {
             " cityTempInSept, cityTempInOct, cityTempInNov FROM CitiesInfoTable WHERE cityName = :cityName")
     TempsByMonth getTempsByMonth(String cityName);
 
-    @Query("SELECT cityName FROM CitiesInfoTable")
-    String getCityName();
-
     @Query("SELECT cityId FROM CitiesInfoTable WHERE UPPER(cityName) = UPPER(:cityName)")
     int getId(String cityName);
+
+    @Query("DELETE FROM CitiesInfoTable WHERE cityId = :id")
+    void deleteByCityId(long id);
+
+    @Query("DELETE FROM CitiesInfoTable")
+    void deleteAllData();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(CitiesInfoTable citiesInfoTable);
@@ -40,13 +43,4 @@ public interface CitiesInfoDao {
     @Delete
     void delete(CitiesInfoTable citiesInfoTable);
 
-    @Query("DELETE FROM CitiesInfoTable WHERE cityId = :id")
-    void deleteByCityId(long id);
-
-    @Query("DELETE FROM CitiesInfoTable")
-    void deleteAllData();
-
-    @Query("SELECT EXISTS(SELECT * FROM CitiesInfoTable WHERE UPPER(cityName) = UPPER(:cityCheck))")
-    Boolean cityAlreadyExist(String cityCheck);
 }
-

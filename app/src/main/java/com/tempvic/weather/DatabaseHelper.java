@@ -3,7 +3,6 @@ package com.tempvic.weather;
 import com.tempvic.weather.database.CitiesInfoTable;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DatabaseHelper {
     public void fetchData() {

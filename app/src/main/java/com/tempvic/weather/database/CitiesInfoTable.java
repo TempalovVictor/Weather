@@ -10,7 +10,7 @@ public class CitiesInfoTable {
     public int cityId;
     public String cityName;
     public String cityType;
-    String temperatures;
+    public String temperatures;
     public String cityTempInJan;
     public String cityTempInFeb;
     public String cityTempInMar;
@@ -74,38 +74,6 @@ public class CitiesInfoTable {
         this.cityTempInOct = cityTempInOct;
         this.cityTempInNov = cityTempInNov;
         this.cityTempInDec = cityTempInDec;
-    }
-
-    @Ignore
-    public CitiesInfoTable(
-            int cityId,
-            String cityName,
-            String cityTempInJan,
-            String cityTempInFeb, String cityTempInMar, String cityTempInApr,
-            String cityTempInMay, String cityTempInJun, String cityTempInJul,
-            String cityTempInAug, String cityTempInSept, String cityTempInOct,
-            String cityTempInNov, String cityTempInDec
-    ) {
-        this.cityId = cityId;
-        this.cityName = cityName;
-        this.cityTempInJan = cityTempInJan;
-        this.cityTempInFeb = cityTempInFeb;
-        this.cityTempInMar = cityTempInMar;
-        this.cityTempInApr = cityTempInApr;
-        this.cityTempInMay = cityTempInMay;
-        this.cityTempInJun = cityTempInJun;
-        this.cityTempInJul = cityTempInJul;
-        this.cityTempInAug = cityTempInAug;
-        this.cityTempInSept = cityTempInSept;
-        this.cityTempInOct = cityTempInOct;
-        this.cityTempInNov = cityTempInNov;
-        this.cityTempInDec = cityTempInDec;
-    }
-
-    @Ignore
-    public CitiesInfoTable(int cityId, String cityType) {
-        this.cityId = cityId;
-        this.cityType = cityType;
     }
 
     public CitiesInfoTable() {
