@@ -16,6 +16,7 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+
         mainContext = getApplicationContext();
         database = Room
                 .databaseBuilder(
@@ -26,5 +27,6 @@ public class MainApplication extends Application {
                 .allowMainThreadQueries()
                 .fallbackToDestructiveMigration()
                 .build();
+        new DatabaseHelper().fetchData();
     }
 }

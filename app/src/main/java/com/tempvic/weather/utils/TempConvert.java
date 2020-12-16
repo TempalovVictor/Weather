@@ -11,7 +11,7 @@ public class TempConvert {
         return String.valueOf(convert);
     }
 
-    public String fahrenheitToCelsius(double fahrenheit) {
+/*    public String fahrenheitToCelsius(double fahrenheit) {
         double convert = (fahrenheit - 32) * 5 / 9;
         return String.valueOf(convert);
     }
@@ -29,5 +29,5 @@ public class TempConvert {
     public String kelvinToFahrenheit(double kelvin) {
         double convert = (kelvin - 273.15) * 9 / 5 + 32;
         return String.valueOf(convert);
-    }
+    }*/
 }

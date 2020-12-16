@@ -10,6 +10,7 @@ public class CitiesInfoTable {
     public int cityId;
     public String cityName;
     public String cityType;
+    String temperatures;
     public String cityTempInJan;
     public String cityTempInFeb;
     public String cityTempInMar;
@@ -110,8 +111,6 @@ public class CitiesInfoTable {
     public CitiesInfoTable() {
     }
 
-/*    String temperatures;
-
     public void setTemperatures(
             String cityTempInJan,
             String cityTempInFeb, String cityTempInMar, String cityTempInApr,
@@ -127,5 +126,5 @@ public class CitiesInfoTable {
 
     public String[] getTemperatures() {
         return temperatures.split("/");
-    }*/
+    }
 }

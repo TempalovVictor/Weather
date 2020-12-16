@@ -2,6 +2,7 @@ package com.tempvic.weather.database;
 
 import android.widget.Spinner;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -18,8 +19,23 @@ public interface CitiesInfoDao {
     @Query("SELECT * FROM CitiesInfoTable WHERE cityId = :id")
     CitiesInfoTable getById(long id);
 
-    @Query("SELECT cityType FROM CitiesInfoTable WHERE cityId = :id")
-    String getCityTypeById(long id);
+    @Query("SELECT cityType FROM CitiesInfoTable WHERE cityName = :cityName")
+    String getCityTypeByName(String cityName);
+
+    @Query("SELECT cityTempInDec, cityTempInJan, cityTempInFeb FROM CitiesInfoTable WHERE cityName = :cityName")
+    WinterTemps getTempInWinter(String cityName);
+
+    @Query("SELECT cityTempInMar, cityTempInApr, cityTempInMay FROM CitiesInfoTable WHERE cityName = :cityName")
+    SpringTemps getTempInSpring(String cityName);
+
+    @Query("SELECT cityTempInJun, cityTempInJul, cityTempInAug FROM CitiesInfoTable WHERE cityName = :cityName")
+    SummerTemps getTempInSummer(String cityName);
+
+    @Query("SELECT cityTempInSept, cityTempInOct, cityTempInNov FROM CitiesInfoTable WHERE cityName = :cityName")
+    AutumnTemps getTempInAutumn(String cityName);
+
+    @Query("SELECT cityName FROM CitiesInfoTable")
+    String getCityName();
 
     @Query("SELECT cityId FROM CitiesInfoTable WHERE UPPER(cityName) = UPPER(:cityName)")
     int getId(String cityName);
@@ -42,3 +58,4 @@ public interface CitiesInfoDao {
     @Query("SELECT EXISTS(SELECT * FROM CitiesInfoTable WHERE UPPER(cityName) = UPPER(:cityCheck))")
     Boolean cityAlreadyExist(String cityCheck);
 }
+
