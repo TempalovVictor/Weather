@@ -67,20 +67,13 @@ public class FilterFragment extends Fragment {
 
         spCityName.setAdapter(adapterSpinner);
 
-        String tempScaleStart = spTempScale.getSelectedItem().toString();
-        String seasonStart = spSeason.getSelectedItem().toString();
-        String cityNameStart = spCityName.getSelectedItem().toString();
-
         spCityName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String res = MainApplication.database.citiesInfoDao().getCityTypeByName(spCityName.getSelectedItem().toString());
                 TextView typeCity = getView().findViewById(R.id.tv_value_city_type);
                 typeCity.setText(res);
-                String cityNameEnd = spCityName.getSelectedItem().toString();
-                if (!cityNameStart.equals(cityNameEnd)) {
-                }
-                getAvgTemp(cityNameEnd, spSeason.getSelectedItem().toString(), spTempScale.getSelectedItem().toString());
+                getAvgTemp(spCityName.getSelectedItem().toString(), spSeason.getSelectedItem().toString(), spTempScale.getSelectedItem().toString());
             }
 
             @Override
@@ -92,10 +85,9 @@ public class FilterFragment extends Fragment {
         spSeason.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String seasonEnd = spSeason.getSelectedItem().toString();
-                if (!seasonStart.equals(seasonEnd)) {
+                if (units.size() != 0) {
+                    getAvgTemp(spCityName.getSelectedItem().toString(), spSeason.getSelectedItem().toString(), spTempScale.getSelectedItem().toString());
                 }
-                getAvgTemp(spCityName.getSelectedItem().toString(), spSeason.getSelectedItem().toString(), spTempScale.getSelectedItem().toString());
             }
 
             @Override
@@ -107,10 +99,9 @@ public class FilterFragment extends Fragment {
         spTempScale.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String tempScaleEnd = spTempScale.getSelectedItem().toString();
-                if (!tempScaleStart.equals(tempScaleEnd)) {
+                if (units.size() != 0) {
+                    getAvgTemp(spCityName.getSelectedItem().toString(), spSeason.getSelectedItem().toString(), spTempScale.getSelectedItem().toString());
                 }
-                getAvgTemp(spCityName.getSelectedItem().toString(), spSeason.getSelectedItem().toString(), spTempScale.getSelectedItem().toString());
             }
 
             @Override
@@ -119,8 +110,9 @@ public class FilterFragment extends Fragment {
             }
         });
 
-
-        getAvgTemp(spCityName.getSelectedItem().toString(), spSeason.getSelectedItem().toString(), spTempScale.getSelectedItem().toString());
+        if (units.size() != 0) {
+            getAvgTemp(spCityName.getSelectedItem().toString(), spSeason.getSelectedItem().toString(), spTempScale.getSelectedItem().toString());
+        }
     }
 
     private void getAvgTemp(String cityName, String season, String tempScale) {
@@ -149,36 +141,36 @@ public class FilterFragment extends Fragment {
 
         switch (season) {
             case "Весна":
-                if(tempScale.equals("Фаренгейт")){
+                if (tempScale.equals("Фаренгейт")) {
                     tvAvgTemp.setText(String.valueOf(celsiusToFahrenheit(avgTempInSpring)));
-                } else if (tempScale.equals("Кельвин")){
+                } else if (tempScale.equals("Кельвин")) {
                     tvAvgTemp.setText(String.valueOf(celsiusToKelvin(avgTempInSpring)));
                 } else {
                     tvAvgTemp.setText(String.valueOf(avgTempInSpring));
                 }
                 break;
             case "Лето":
-                if(tempScale.equals("Фаренгейт")){
+                if (tempScale.equals("Фаренгейт")) {
                     tvAvgTemp.setText(String.valueOf(celsiusToFahrenheit(avgTempInSummer)));
-                } else if (tempScale.equals("Кельвин")){
+                } else if (tempScale.equals("Кельвин")) {
                     tvAvgTemp.setText(String.valueOf(celsiusToKelvin(avgTempInSummer)));
                 } else {
                     tvAvgTemp.setText(String.valueOf(avgTempInSummer));
                 }
                 break;
             case "Осень":
-                if(tempScale.equals("Фаренгейт")){
+                if (tempScale.equals("Фаренгейт")) {
                     tvAvgTemp.setText(String.valueOf(celsiusToFahrenheit(avgTempInAutumn)));
-                } else if (tempScale.equals("Кельвин")){
+                } else if (tempScale.equals("Кельвин")) {
                     tvAvgTemp.setText(String.valueOf(celsiusToKelvin(avgTempInAutumn)));
                 } else {
                     tvAvgTemp.setText(String.valueOf(avgTempInAutumn));
                 }
                 break;
             case "Зима":
-                if(tempScale.equals("Фаренгейт")){
+                if (tempScale.equals("Фаренгейт")) {
                     tvAvgTemp.setText(String.valueOf(celsiusToFahrenheit(avgTempInWinter)));
-                } else if (tempScale.equals("Кельвин")){
+                } else if (tempScale.equals("Кельвин")) {
                     tvAvgTemp.setText(String.valueOf(celsiusToKelvin(avgTempInWinter)));
                 } else {
                     tvAvgTemp.setText(String.valueOf(avgTempInWinter));
