@@ -4,28 +4,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.tempvic.weather.BuildConfig;
 import com.tempvic.weather.MainApplication;
 import com.tempvic.weather.R;
-import com.tempvic.weather.dataUsage.CityItem;
 import com.tempvic.weather.database.CitiesInfoTable;
-import com.tempvic.weather.database.SpringTemps;
-import com.tempvic.weather.database.WinterTemps;
+import com.tempvic.weather.database.TempsByMonth;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class FilterFragment extends Fragment {
@@ -101,6 +95,7 @@ public class FilterFragment extends Fragment {
                 String seasonEnd = spSeason.getSelectedItem().toString();
                 if (!seasonStart.equals(seasonEnd)) {
                 }
+                getAvgTemp(spCityName.getSelectedItem().toString(), spSeason.getSelectedItem().toString(), spTempScale.getSelectedItem().toString());
             }
 
             @Override
@@ -115,6 +110,7 @@ public class FilterFragment extends Fragment {
                 String tempScaleEnd = spTempScale.getSelectedItem().toString();
                 if (!tempScaleStart.equals(tempScaleEnd)) {
                 }
+                getAvgTemp(spCityName.getSelectedItem().toString(), spSeason.getSelectedItem().toString(), spTempScale.getSelectedItem().toString());
             }
 
             @Override
@@ -131,44 +127,73 @@ public class FilterFragment extends Fragment {
         TextView tvAvgTemp = getView().findViewById(R.id.tv_value_temp_avg);
 
 
-        WinterTemps winterTemps = MainApplication.database.citiesInfoDao().getTempInWinter(cityName);
+        TempsByMonth tempsByMonth = MainApplication.database.citiesInfoDao().getTempsByMonth(cityName);
 
-        int tempInDec = Integer.parseInt(winterTemps.cityTempInDec);
-        int tempInJan = Integer.parseInt(winterTemps.cityTempInJan);
-        int tempInFeb = Integer.parseInt(winterTemps.cityTempInFeb);
+        int tempInDec = Integer.parseInt(tempsByMonth.cityTempInDec);
+        int tempInJan = Integer.parseInt(tempsByMonth.cityTempInJan);
+        int tempInFeb = Integer.parseInt(tempsByMonth.cityTempInFeb);
+        int tempInMar = Integer.parseInt(tempsByMonth.cityTempInMar);
+        int tempInApr = Integer.parseInt(tempsByMonth.cityTempInApr);
+        int tempInMay = Integer.parseInt(tempsByMonth.cityTempInMay);
+        int tempInJun = Integer.parseInt(tempsByMonth.cityTempInJun);
+        int tempInJul = Integer.parseInt(tempsByMonth.cityTempInJul);
+        int tempInAug = Integer.parseInt(tempsByMonth.cityTempInAug);
+        int tempInSept = Integer.parseInt(tempsByMonth.cityTempInSept);
+        int tempInOct = Integer.parseInt(tempsByMonth.cityTempInOct);
+        int tempInNov = Integer.parseInt(tempsByMonth.cityTempInNov);
 
-        int tempInMar = Integer.parseInt(temps.cityTempInMar);
-        int tempInApr = Integer.parseInt(temps.cityTempInApr);
-        int tempInMay = Integer.parseInt(temps.cityTempInMay);
-        int tempInJun = Integer.parseInt(temps.cityTempInJun);
-        int tempInJul = Integer.parseInt(temps.cityTempInJul);
-        int tempInAug = Integer.parseInt(temps.cityTempInAug);
-        int tempInSept = Integer.parseInt(temps.cityTempInSept);
-        int tempInOct = Integer.parseInt(temps.cityTempInOct);
-        int tempInNov = Integer.parseInt(temps.cityTempInNov);
+        int avgTempInWinter = (tempInDec + tempInJan + tempInFeb) / 3;
+        int avgTempInSpring = (tempInMar + tempInApr + tempInMay) / 3;
+        int avgTempInSummer = (tempInJun + tempInJul + tempInAug) / 3;
+        int avgTempInAutumn = (tempInSept + tempInOct + tempInNov) / 3;
 
-        int result = (tempInDec + tempInJan + tempInFeb)/3;
-
-        tvAvgTemp.setText(String.valueOf(result));
-
-        List<CitiesInfoTable> units = MainApplication.database.citiesInfoDao().getAll();
-
-/*        ArrayList<String> tempInWinter = (ArrayList<String>) Collections.singletonList(MainApplication.database.citiesInfoDao().getTempInWinter(cityName));
-        ArrayList<String> tempInSpring = (ArrayList<String>) Collections.singletonList(MainApplication.database.citiesInfoDao().getTempInSpring(cityName));
-        ArrayList<String> tempInSummer = (ArrayList<String>) Collections.singletonList(MainApplication.database.citiesInfoDao().getTempInSummer(cityName));
-        ArrayList<String> tempInAutumn = (ArrayList<String>) Collections.singletonList(MainApplication.database.citiesInfoDao().getTempInAutumn(cityName));*/
-
-        //ArrayList<String> result = new ArrayList<>();
-
-/*        switch (season){
+        switch (season) {
+            case "Весна":
+                if(tempScale.equals("Фаренгейт")){
+                    tvAvgTemp.setText(String.valueOf(celsiusToFahrenheit(avgTempInSpring)));
+                } else if (tempScale.equals("Кельвин")){
+                    tvAvgTemp.setText(String.valueOf(celsiusToKelvin(avgTempInSpring)));
+                } else {
+                    tvAvgTemp.setText(String.valueOf(avgTempInSpring));
+                }
+                break;
+            case "Лето":
+                if(tempScale.equals("Фаренгейт")){
+                    tvAvgTemp.setText(String.valueOf(celsiusToFahrenheit(avgTempInSummer)));
+                } else if (tempScale.equals("Кельвин")){
+                    tvAvgTemp.setText(String.valueOf(celsiusToKelvin(avgTempInSummer)));
+                } else {
+                    tvAvgTemp.setText(String.valueOf(avgTempInSummer));
+                }
+                break;
+            case "Осень":
+                if(tempScale.equals("Фаренгейт")){
+                    tvAvgTemp.setText(String.valueOf(celsiusToFahrenheit(avgTempInAutumn)));
+                } else if (tempScale.equals("Кельвин")){
+                    tvAvgTemp.setText(String.valueOf(celsiusToKelvin(avgTempInAutumn)));
+                } else {
+                    tvAvgTemp.setText(String.valueOf(avgTempInAutumn));
+                }
+                break;
             case "Зима":
-        }*/
-
-        ArrayList<String> citiesName = new ArrayList<>();
-
-        for (int i = 0; i < units.size(); i++) {
-            CitiesInfoTable table = units.get(i);
-            citiesName.add(table.getCityName());
+                if(tempScale.equals("Фаренгейт")){
+                    tvAvgTemp.setText(String.valueOf(celsiusToFahrenheit(avgTempInWinter)));
+                } else if (tempScale.equals("Кельвин")){
+                    tvAvgTemp.setText(String.valueOf(celsiusToKelvin(avgTempInWinter)));
+                } else {
+                    tvAvgTemp.setText(String.valueOf(avgTempInWinter));
+                }
+                break;
+            default:
+                break;
         }
+    }
+
+    private double celsiusToFahrenheit(int celsius) {
+        return (double) (celsius * 9.0 / 5.0) + 32.0;
+    }
+
+    private double celsiusToKelvin(int celsius) {
+        return (double) celsius + 273.15;
     }
 }

@@ -1,8 +1,5 @@
 package com.tempvic.weather.database;
 
-import android.widget.Spinner;
-
-import androidx.room.ColumnInfo;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -22,17 +19,11 @@ public interface CitiesInfoDao {
     @Query("SELECT cityType FROM CitiesInfoTable WHERE cityName = :cityName")
     String getCityTypeByName(String cityName);
 
-    @Query("SELECT cityTempInDec, cityTempInJan, cityTempInFeb FROM CitiesInfoTable WHERE cityName = :cityName")
-    WinterTemps getTempInWinter(String cityName);
-
-    @Query("SELECT cityTempInMar, cityTempInApr, cityTempInMay FROM CitiesInfoTable WHERE cityName = :cityName")
-    SpringTemps getTempInSpring(String cityName);
-
-    @Query("SELECT cityTempInJun, cityTempInJul, cityTempInAug FROM CitiesInfoTable WHERE cityName = :cityName")
-    SummerTemps getTempInSummer(String cityName);
-
-    @Query("SELECT cityTempInSept, cityTempInOct, cityTempInNov FROM CitiesInfoTable WHERE cityName = :cityName")
-    AutumnTemps getTempInAutumn(String cityName);
+    @Query("SELECT cityTempInDec, cityTempInJan, cityTempInFeb," +
+            " cityTempInMar, cityTempInApr, cityTempInMay, " +
+            "cityTempInJun, cityTempInJul, cityTempInAug," +
+            " cityTempInSept, cityTempInOct, cityTempInNov FROM CitiesInfoTable WHERE cityName = :cityName")
+    TempsByMonth getTempsByMonth(String cityName);
 
     @Query("SELECT cityName FROM CitiesInfoTable")
     String getCityName();
