@@ -84,7 +84,7 @@ public class DetailCityFragment extends Fragment {
             cityName.setText(DEFAULT_STRING);
         } else {
             cityName.setText(units.getCityName());
-            List arrayType = Arrays.asList(getResources().getStringArray(R.array.type_city));
+            List<String> arrayType = Arrays.asList(getResources().getStringArray(R.array.type_city));
             String cityTypeFromDb = units.getCityType();
             int position = arrayType.indexOf(cityTypeFromDb);
             cityType.setSelection(position);
@@ -127,6 +127,24 @@ public class DetailCityFragment extends Fragment {
         } else {
             DetailCityAdapter adapter = (DetailCityAdapter) recyclerView.getAdapter();
             ArrayList<DetailCityItem> allMonthItems = tryGetAllMonthItems(adapter);
+
+            for (int i = 0; i < allMonthItems.size(); i++) {
+                boolean hasDigit = allMonthItems.get(i).getTemperature().matches(".*\\d+.*");
+                String substring = "-.";
+
+                if (allMonthItems.get(i).getTemperature().equals(".") ||
+                        allMonthItems.get(i).getTemperature().equals("-") ||
+                        allMonthItems.get(i).getTemperature().equals("-.") ||
+                        allMonthItems.get(i).getTemperature().contains(substring) && hasDigit) {
+                    Toast toast = Toast.makeText(getContext(), "Ошибка! Температура месяца " + allMonthItems.get(i).getMonth() + " заполнена неверно.", Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                } else if(allMonthItems.get(i).getTemperature().contains(".")){
+                    Toast toast = Toast.makeText(getContext(), "Ошибка! Температура месяца " + allMonthItems.get(i).getMonth() + " должна быть целым числом.", Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
+            }
 
             if (allMonthItems.size() == 0) {
                 showMessage("Ошибка! Заполните значения температур для каждового месяца");
