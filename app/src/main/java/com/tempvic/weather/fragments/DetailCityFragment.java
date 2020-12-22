@@ -27,6 +27,7 @@ import com.tempvic.weather.database.CitiesInfoTable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static com.tempvic.weather.Const.DEFAULT_STRING;
 import static com.tempvic.weather.Const.DEFAULT_TABLE_INT;
@@ -68,7 +69,7 @@ public class DetailCityFragment extends Fragment {
 
         Button buttonSave = view.findViewById(R.id.btn_save);
 
-        RecyclerView recyclerView = getActivity().findViewById(R.id.rv_month_temp);
+        RecyclerView recyclerView = Objects.requireNonNull(getActivity()).findViewById(R.id.rv_month_temp);
         DetailCityAdapter adapter = new DetailCityAdapter();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -126,20 +127,18 @@ public class DetailCityFragment extends Fragment {
             showMessage("Ошибка! Город с таким названием уже есть");
         } else {
             DetailCityAdapter adapter = (DetailCityAdapter) recyclerView.getAdapter();
+            assert adapter != null;
             ArrayList<DetailCityItem> allMonthItems = tryGetAllMonthItems(adapter);
 
             for (int i = 0; i < allMonthItems.size(); i++) {
-                boolean hasDigit = allMonthItems.get(i).getTemperature().matches(".*\\d+.*");
-                String substring = "-.";
-
                 if (allMonthItems.get(i).getTemperature().equals(".") ||
                         allMonthItems.get(i).getTemperature().equals("-") ||
                         allMonthItems.get(i).getTemperature().equals("-.") ||
-                        allMonthItems.get(i).getTemperature().contains(substring) && hasDigit) {
+                        allMonthItems.get(i).getTemperature().contains("-.")) {
                     Toast toast = Toast.makeText(getContext(), "Ошибка! Температура месяца " + allMonthItems.get(i).getMonth() + " заполнена неверно.", Toast.LENGTH_SHORT);
                     toast.show();
                     return;
-                } else if(allMonthItems.get(i).getTemperature().contains(".")){
+                } else if (allMonthItems.get(i).getTemperature().contains(".")) {
                     Toast toast = Toast.makeText(getContext(), "Ошибка! Температура месяца " + allMonthItems.get(i).getMonth() + " должна быть целым числом.", Toast.LENGTH_SHORT);
                     toast.show();
                     return;
