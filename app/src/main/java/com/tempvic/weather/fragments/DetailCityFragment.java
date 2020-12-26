@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,7 +31,7 @@ import java.util.Objects;
 import static com.tempvic.weather.Const.DEFAULT_STRING;
 import static com.tempvic.weather.Const.DEFAULT_TABLE_INT;
 
-public class DetailCityFragment extends Fragment {
+public class DetailCityFragment extends BaseFragment {
 
     public final static String ARGS_DETAIL_CITY_ID = "ARGS_DETAIL_CITY_ID";
     public int detailCityId;
@@ -54,6 +53,8 @@ public class DetailCityFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        checkThemeColor(view);
 
         CitiesInfoTable cityDetail = MainApplication.database.citiesInfoDao().getById(detailCityId);
         EditText cityName = view.findViewById(R.id.et_city_name);
