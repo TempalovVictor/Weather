@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.tempvic.weather.MainApplication;
 import com.tempvic.weather.R;
@@ -22,7 +21,9 @@ import com.tempvic.weather.database.TempsByMonth;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilterFragment extends Fragment {
+public class FilterFragment extends BaseFragment implements FilterMvpView{
+
+    FilterPresenter filterPresenter;
 
     @Nullable
     @Override
@@ -33,6 +34,10 @@ public class FilterFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        filterPresenter = new FilterPresenter();
+
+        checkThemeColor(view);
 
         Button btn = view.findViewById(R.id.btn_edit);
         btn.setOnClickListener(v -> {
@@ -171,5 +176,30 @@ public class FilterFragment extends Fragment {
 
     private double celsiusToKelvin(int celsius) {
         return (double) celsius + 273.15;
+    }
+
+    @Override
+    public void showFilterCity() {
+
+    }
+
+    @Override
+    public void showFilterSeason() {
+
+    }
+
+    @Override
+    public void showFilterScale() {
+
+    }
+
+    @Override
+    public void showAvgTemp() {
+
+    }
+
+    @Override
+    public void showCityType() {
+
     }
 }

@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,7 +28,7 @@ import java.util.Objects;
 import static com.tempvic.weather.Const.DEFAULT_TABLE_INT;
 import static com.tempvic.weather.fragments.DetailCityFragment.ARGS_DETAIL_CITY_ID;
 
-public class CityListFragment extends Fragment {
+public class CityListFragment extends BaseFragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +44,9 @@ public class CityListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        checkThemeColor(view);
+
         initUi();
     }
 
