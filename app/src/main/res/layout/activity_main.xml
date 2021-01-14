@@ -4,6 +4,6 @@
     android:id="@+id/container_fragment_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.MainActivity">
+    tools:context=".presentation.main.MainActivity">
 
 </FrameLayout>
