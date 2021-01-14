@@ -21,4 +21,9 @@ public class FilterPresenter implements FilterContract.MvpPresenter {
         contractView.initUi();
         contractView.initAdapterWithDatabase(units);
     }
+
+    @Override
+    public void onClear() {
+        contractView = null;
+    }
 }

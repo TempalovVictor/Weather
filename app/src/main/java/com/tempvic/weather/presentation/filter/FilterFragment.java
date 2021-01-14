@@ -25,7 +25,7 @@ import androidx.annotation.Nullable;
 
 public class FilterFragment extends BaseFragment implements FilterContract.MvpView {
 
-    private final FilterContract.MvpPresenter presenter = new FilterPresenter();
+    private FilterContract.MvpPresenter presenter = new FilterPresenter();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -187,5 +187,12 @@ public class FilterFragment extends BaseFragment implements FilterContract.MvpVi
 
     private double celsiusToKelvin(int celsius) {
         return (double) celsius + 273.15;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.onClear();
+        presenter = null;
     }
 }

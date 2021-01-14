@@ -13,5 +13,6 @@ public final class FilterContract {
     public interface MvpPresenter {
         void onStart(MvpView contractView);
         void onMvpViewContextCreated();
+        void onClear();
     }
 }
