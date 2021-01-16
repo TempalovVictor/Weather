@@ -1,16 +1,16 @@
-package com.tempvic.weather.presentation.filter;
+package com.tempvic.weather.presentation.cityList;
 
 import com.tempvic.weather.data.database.CitiesInfoTable;
 import com.tempvic.weather.presentation.main.MainApplication;
 
 import java.util.List;
 
-public class FilterPresenter implements FilterContract.MvpPresenter {
-    private FilterContract.MvpView contractView;
+public class CityListPresenter implements CityListContract.MvpPresenter {
+    private CityListContract.MvpView contractView;
     private List<CitiesInfoTable> units;
 
     @Override
-    public void onStart(FilterContract.MvpView contractView) {
+    public void onStart(CityListContract.MvpView contractView) {
         this.contractView = contractView;
         units = MainApplication.database.citiesInfoDao().getAll();
     }
@@ -18,7 +18,12 @@ public class FilterPresenter implements FilterContract.MvpPresenter {
     @Override
     public void onMvpViewContextCreated() {
         contractView.initUi();
-        contractView.initAdapterWithDatabase(units); //Почему через MvpView мы инитим данные из БД?
+        contractView.initAdapterWithDatabase(units);
+    }
+
+    @Override
+    public void deleteCity(int idCityItem) {
+        MainApplication.database.citiesInfoDao().deleteByCityId(idCityItem);
     }
 
     @Override

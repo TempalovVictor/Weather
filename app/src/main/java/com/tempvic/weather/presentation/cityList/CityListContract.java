@@ -1,10 +1,10 @@
-package com.tempvic.weather.presentation.filter;
+package com.tempvic.weather.presentation.cityList;
 
 import com.tempvic.weather.data.database.CitiesInfoTable;
 
 import java.util.List;
 
-public final class FilterContract {
+public final class CityListContract {
     public interface MvpView {
         void initUi();
 
@@ -15,6 +15,8 @@ public final class FilterContract {
         void onStart(MvpView contractView);
 
         void onMvpViewContextCreated();
+
+        void deleteCity(int idCityItem);
 
         void onClear();
     }

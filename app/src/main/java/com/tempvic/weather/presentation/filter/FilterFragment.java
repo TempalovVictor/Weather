@@ -30,7 +30,6 @@ public class FilterFragment extends BaseFragment implements FilterContract.MvpVi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         presenter.onStart(this);
     }
 
@@ -49,10 +48,12 @@ public class FilterFragment extends BaseFragment implements FilterContract.MvpVi
     @Override
     public void initUi() {
         Button btn = getView().findViewById(R.id.btn_edit);
-        btn.setOnClickListener(v -> { new NavigationHelper().showCityListFragment(getActivity()); });
+        btn.setOnClickListener(v -> {
+            new NavigationHelper().showCityListFragment(getActivity());
+        });
     }
 
-    @Override
+    @Override  //У нас тут вроде не только адаптеры, целесообразно ли так называть метод?
     public void initAdapterWithDatabase(List<CitiesInfoTable> units) {
 
         TextView tvAvgTemp = getView().findViewById(R.id.tv_value_temp_avg);
@@ -81,7 +82,7 @@ public class FilterFragment extends BaseFragment implements FilterContract.MvpVi
 
                 CitiesInfoTable selectedTable = null;
                 for (CitiesInfoTable table : units) {
-                    if ( table.cityName.equals( spCityName.getSelectedItem().toString())) {
+                    if (table.cityName.equals(spCityName.getSelectedItem().toString())) {
                         selectedTable = table;
                     }
                 }
