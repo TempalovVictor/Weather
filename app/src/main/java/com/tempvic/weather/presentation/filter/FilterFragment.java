@@ -74,7 +74,9 @@ public class FilterFragment extends BaseFragment implements FilterContract.MvpVi
         );
 
         adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         spCityName.setAdapter(adapterSpinner);
+
 
         spCityName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
