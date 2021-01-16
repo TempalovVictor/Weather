@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public abstract class BaseFragment extends Fragment{
+public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onStart() {
@@ -33,7 +33,10 @@ public abstract class BaseFragment extends Fragment{
         checkThemeColor();
     }
 
-    public void checkThemeColor(){
+    public void onBackPressedCallback() {
+    }
+
+    public void checkThemeColor() {
         switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
             case Configuration.UI_MODE_NIGHT_YES:
                 Objects.requireNonNull(getView()).setBackgroundColor(Color.BLACK);

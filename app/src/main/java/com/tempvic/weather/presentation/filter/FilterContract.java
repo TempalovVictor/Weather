@@ -9,6 +9,8 @@ public final class FilterContract {
         void initUi();
 
         void initAdapterWithDatabase(List<CitiesInfoTable> units);
+
+        void updateAdapterWithDatabase(List<CitiesInfoTable> units);
     }
 
     public interface MvpPresenter {
@@ -17,5 +19,7 @@ public final class FilterContract {
         void onMvpViewContextCreated();
 
         void onClear();
+
+        void updateDatabaseData();
     }
 }

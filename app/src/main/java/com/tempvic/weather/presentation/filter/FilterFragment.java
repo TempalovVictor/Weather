@@ -1,5 +1,6 @@
 package com.tempvic.weather.presentation.filter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.tempvic.weather.R;
-import com.tempvic.weather.common.NavigationHelper;
+import com.tempvic.weather.presentation.base.NavigationHelper;
 import com.tempvic.weather.data.database.CitiesInfoTable;
 import com.tempvic.weather.data.database.TempsByMonth;
 import com.tempvic.weather.presentation.base.BaseFragment;
@@ -26,6 +27,7 @@ import androidx.annotation.Nullable;
 public class FilterFragment extends BaseFragment implements FilterContract.MvpView {
 
     private FilterContract.MvpPresenter presenter = new FilterPresenter();
+    private final int REQ_CODE_SHOW_CITY_LIST = 1234;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,8 +51,32 @@ public class FilterFragment extends BaseFragment implements FilterContract.MvpVi
     public void initUi() {
         Button btn = getView().findViewById(R.id.btn_edit);
         btn.setOnClickListener(v -> {
-            new NavigationHelper().showCityListFragment(getActivity());
+            new NavigationHelper().showCityListFragment(this, REQ_CODE_SHOW_CITY_LIST);
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQ_CODE_SHOW_CITY_LIST) {
+            presenter.updateDatabaseData();
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
+    public void updateAdapterWithDatabase(List<CitiesInfoTable> units) {
+        Spinner spCityName = getView().findViewById(R.id.sp_city);
+
+        ArrayList<String> citiesName = new ArrayList<>();
+        for (int i = 0; i < units.size(); i++) {
+            CitiesInfoTable table = units.get(i);
+            citiesName.add(table.getCityName());
+        }
+
+        ArrayAdapter<String> adapter = (ArrayAdapter<String>) spCityName.getAdapter();
+        adapter.clear();
+        adapter.addAll(citiesName);
     }
 
     @Override  //У нас тут вроде не только адаптеры, целесообразно ли так называть метод?

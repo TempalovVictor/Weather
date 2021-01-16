@@ -5,12 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.PowerManager;
+
 import com.tempvic.weather.R;
+import com.tempvic.weather.presentation.base.BaseFragment;
 import com.tempvic.weather.presentation.filter.FilterFragment;
 
 import static android.view.WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
 
 public class MainActivity extends AppCompatActivity {
+
+    private String mTag = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,18 +25,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startFirstFragment() {
+        addFragmentToContainer(new FilterFragment());
+    }
+
+
+    public void addFragmentToContainer(BaseFragment fragmentForContainer) {
+        mTag = fragmentForContainer.getTag();
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.container_fragment_root, new FilterFragment(), "FilterFragment")
-                .addToBackStack("FilterFragment")
+                .replace(R.id.container_fragment_root, fragmentForContainer, mTag)
+                .addToBackStack(mTag)
                 .commit();
     }
+
+    public BaseFragment findCurrentFragment() {
+        return (BaseFragment) getSupportFragmentManager().findFragmentByTag(mTag);
+    }
+
 
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() == 0 || getSupportFragmentManager().getBackStackEntryCount() == 1) {
             finish();
         } else {
+            findCurrentFragment().onBackPressedCallback();
             super.onBackPressed();
         }
     }

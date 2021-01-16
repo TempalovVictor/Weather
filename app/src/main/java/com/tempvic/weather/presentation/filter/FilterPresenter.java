@@ -18,11 +18,17 @@ public class FilterPresenter implements FilterContract.MvpPresenter {
     @Override
     public void onMvpViewContextCreated() {
         contractView.initUi();
-        contractView.initAdapterWithDatabase(units); //Почему через MvpView мы инитим данные из БД?
+        contractView.initAdapterWithDatabase(units);
     }
 
     @Override
     public void onClear() {
         contractView = null;
+    }
+
+    @Override
+    public void updateDatabaseData() {
+        units = MainApplication.database.citiesInfoDao().getAll();
+        contractView.updateAdapterWithDatabase(units);
     }
 }

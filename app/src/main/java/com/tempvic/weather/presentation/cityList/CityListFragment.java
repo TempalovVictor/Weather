@@ -1,5 +1,7 @@
 package com.tempvic.weather.presentation.cityList;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tempvic.weather.common.NavigationHelper;
+import com.tempvic.weather.presentation.base.NavigationHelper;
 import com.tempvic.weather.presentation.cityList.item.ICityItemCallback;
-import com.tempvic.weather.presentation.filter.FilterContract;
-import com.tempvic.weather.presentation.filter.FilterPresenter;
-import com.tempvic.weather.presentation.main.MainApplication;
 import com.tempvic.weather.R;
 import com.tempvic.weather.presentation.cityList.item.CityItem;
 import com.tempvic.weather.presentation.cityList.item.DataCityAdapter;
@@ -24,14 +23,11 @@ import com.tempvic.weather.presentation.base.IBaseListItem;
 import com.tempvic.weather.presentation.base.SimpleListAdapter;
 import com.tempvic.weather.data.database.CitiesInfoTable;
 import com.tempvic.weather.presentation.base.BaseFragment;
-import com.tempvic.weather.presentation.cityDetail.DetailCityFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static com.tempvic.weather.common.Const.DEFAULT_TABLE_INT;
-import static com.tempvic.weather.presentation.cityDetail.DetailCityFragment.ARGS_DETAIL_CITY_ID;
 
 public class CityListFragment extends BaseFragment implements CityListContract.MvpView {
 
@@ -40,7 +36,6 @@ public class CityListFragment extends BaseFragment implements CityListContract.M
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         presenter.onStart(this);
     }
 
@@ -137,6 +132,11 @@ public class CityListFragment extends BaseFragment implements CityListContract.M
             }
         }
         return selectedItem;
+    }
+
+    @Override
+    public void onBackPressedCallback() {
+        getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, new Intent());
     }
 
     @Override
