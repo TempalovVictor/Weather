@@ -38,6 +38,11 @@ public class DetailCityFragment extends BaseFragment {
     public int detailCityId;
 
     @Override
+    public String getFragmentName() {
+        return "DetailCityFragment";
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {

@@ -25,6 +25,11 @@ import androidx.annotation.Nullable;
 
 public class FilterFragmentOld extends BaseFragment  {
 
+    @Override
+    public String getFragmentName() {
+        return "FilterFragmentOld";
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

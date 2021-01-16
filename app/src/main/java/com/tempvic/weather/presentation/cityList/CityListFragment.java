@@ -34,6 +34,11 @@ public class CityListFragment extends BaseFragment implements CityListContract.M
     private CityListContract.MvpPresenter presenter = new CityListPresenter();
 
     @Override
+    public String getFragmentName() {
+        return "CityListFragment";
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter.onStart(this);
@@ -52,24 +57,20 @@ public class CityListFragment extends BaseFragment implements CityListContract.M
     }
 
     @Override
-    public void initUi() {
-        //что нужно оставить тут?
-    }
-
-    @Override
     public void initAdapterWithDatabase(List<CitiesInfoTable> units) {
         RecyclerView recyclerView = getActivity().findViewById(R.id.rv_city_list);
         final ICityItemCallback iCityItemInterface = idItem -> handleSelectItems(recyclerView, idItem);
         DataCityAdapter adapter = new DataCityAdapter(iCityItemInterface);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-        setListeners(adapter);
 
         for (int i = 0; i < units.size(); i++) {
             CitiesInfoTable table = units.get(i);
             CityItem item = new CityItem(table.getCityName(), table.getCityId());
             adapter.add(item);
         }
+
+        setListeners(adapter);
     }
 
     private void handleSelectItems(RecyclerView recyclerView, int idItem) {

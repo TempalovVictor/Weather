@@ -26,6 +26,13 @@ import androidx.annotation.Nullable;
 
 public class FilterFragment extends BaseFragment implements FilterContract.MvpView {
 
+    private ArrayAdapter<String> adapterSpinner;
+
+    @Override
+    public String getFragmentName() {
+        return "FilterFragment";
+    }
+
     private FilterContract.MvpPresenter presenter = new FilterPresenter();
     private final int REQ_CODE_SHOW_CITY_LIST = 1234;
 
@@ -64,21 +71,6 @@ public class FilterFragment extends BaseFragment implements FilterContract.MvpVi
         }
     }
 
-    @Override
-    public void updateAdapterWithDatabase(List<CitiesInfoTable> units) {
-        Spinner spCityName = getView().findViewById(R.id.sp_city);
-
-        ArrayList<String> citiesName = new ArrayList<>();
-        for (int i = 0; i < units.size(); i++) {
-            CitiesInfoTable table = units.get(i);
-            citiesName.add(table.getCityName());
-        }
-
-        ArrayAdapter<String> adapter = (ArrayAdapter<String>) spCityName.getAdapter();
-        adapter.clear();
-        adapter.addAll(citiesName);
-    }
-
     @Override  //У нас тут вроде не только адаптеры, целесообразно ли так называть метод?
     public void initAdapterWithDatabase(List<CitiesInfoTable> units) {
 
@@ -93,7 +85,7 @@ public class FilterFragment extends BaseFragment implements FilterContract.MvpVi
             citiesName.add(table.getCityName());
         }
 
-        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<>(
+        adapterSpinner = new ArrayAdapter<>(
                 getContext(),
                 android.R.layout.simple_spinner_item,
                 citiesName
@@ -159,6 +151,19 @@ public class FilterFragment extends BaseFragment implements FilterContract.MvpVi
         if (units.size() != 0) {
             setAvgTemp(spCityName.getSelectedItem().toString(), spSeason.getSelectedItem().toString(), spTempScale.getSelectedItem().toString(), tvAvgTemp);
         }
+    }
+
+    @Override
+    public void updateAdapterWithDatabase(List<CitiesInfoTable> units) {
+
+        ArrayList<String> citiesName = new ArrayList<>();
+        for (int i = 0; i < units.size(); i++) {
+            CitiesInfoTable table = units.get(i);
+            citiesName.add(table.getCityName());
+        }
+
+        adapterSpinner.clear();
+        adapterSpinner.addAll(citiesName);
     }
 
     private void setAvgTemp(String cityName, String season, String tempScale, TextView tvAvgTemp) {

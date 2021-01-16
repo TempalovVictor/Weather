@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void addFragmentToContainer(BaseFragment fragmentForContainer) {
-        mTag = fragmentForContainer.getTag();
+        mTag = fragmentForContainer.getFragmentName();
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container_fragment_root, fragmentForContainer, mTag)

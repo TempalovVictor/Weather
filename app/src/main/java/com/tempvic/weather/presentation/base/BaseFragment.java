@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 
 public abstract class BaseFragment extends Fragment {
 
+    public abstract String getFragmentName();
+
     @Override
     public void onStart() {
         super.onStart();
@@ -35,6 +37,7 @@ public abstract class BaseFragment extends Fragment {
 
     public void onBackPressedCallback() {
     }
+
 
     public void checkThemeColor() {
         switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {

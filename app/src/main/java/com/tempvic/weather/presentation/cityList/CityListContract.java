@@ -6,8 +6,6 @@ import java.util.List;
 
 public final class CityListContract {
     public interface MvpView {
-        void initUi();
-
         void initAdapterWithDatabase(List<CitiesInfoTable> units);
     }
 

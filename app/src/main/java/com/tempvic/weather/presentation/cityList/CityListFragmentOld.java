@@ -33,6 +33,11 @@ import static com.tempvic.weather.presentation.cityDetail.DetailCityFragment.ARG
 public class CityListFragmentOld extends BaseFragment {
 
     @Override
+    public String getFragmentName() {
+        return "CityListFragmentOld";
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
