@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         addFragmentToContainer(new FilterFragment());
     }
 
-
     public void addFragmentToContainer(BaseFragment fragmentForContainer) {
         mTag = fragmentForContainer.getFragmentName();
         getSupportFragmentManager()
@@ -41,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     public BaseFragment findCurrentFragment() {
         return (BaseFragment) getSupportFragmentManager().findFragmentByTag(mTag);
     }
-
 
     @Override
     public void onBackPressed() {

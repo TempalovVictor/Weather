@@ -32,7 +32,9 @@ import java.util.Objects;
 import static com.tempvic.weather.common.Const.DEFAULT_STRING;
 import static com.tempvic.weather.common.Const.DEFAULT_TABLE_INT;
 
-public class DetailCityFragment extends BaseFragment {
+public class DetailCityFragment extends BaseFragment implements DetailCityContract.MvpView{
+
+    private DetailCityContract.MvpPresenter presenter = new DetailCityPresenter();
 
     public final static String ARGS_DETAIL_CITY_ID = "ARGS_DETAIL_CITY_ID";
     public int detailCityId;
@@ -48,6 +50,7 @@ public class DetailCityFragment extends BaseFragment {
         if (getArguments() != null) {
             detailCityId = getArguments().getInt(ARGS_DETAIL_CITY_ID, DEFAULT_TABLE_INT);
         }
+        presenter.onStart(this);
     }
 
     @Nullable
@@ -59,10 +62,17 @@ public class DetailCityFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        presenter.onMvpViewContextCreated();
 
-        CitiesInfoTable cityDetail = MainApplication.database.citiesInfoDao().getById(detailCityId);
-        EditText cityName = view.findViewById(R.id.et_city_name);
-        Spinner cityType = view.findViewById(R.id.sp_type_city);
+    }
+
+    @Override
+    public void initAdapterWithDatabase(List<CitiesInfoTable> units) {
+
+        CitiesInfoTable cityDetail = presenter.getDetailsById(detailCityId);
+
+        EditText cityName = getView().findViewById(R.id.et_city_name);
+        Spinner cityType = getView().findViewById(R.id.sp_type_city);
 
         ArrayAdapter<?> adapterSpinner =
                 ArrayAdapter.createFromResource(getContext(), R.array.type_city, android.R.layout.simple_spinner_item);
@@ -72,7 +82,7 @@ public class DetailCityFragment extends BaseFragment {
 
         setCityName(cityDetail, cityName, cityType);
 
-        Button buttonSave = view.findViewById(R.id.btn_save);
+        Button buttonSave = getView().findViewById(R.id.btn_save);
 
         RecyclerView recyclerView = Objects.requireNonNull(getActivity()).findViewById(R.id.rv_month_temp);
         DetailCityAdapter adapter = new DetailCityAdapter();
@@ -198,8 +208,16 @@ public class DetailCityFragment extends BaseFragment {
         return isTempEmpty ? new ArrayList<>() : allItems;
     }
 
+    //TODO вывести в пакет common метод ScreenNotice
     private void showMessage(String message) {
         Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.onClear();
+        presenter = null;
     }
 }

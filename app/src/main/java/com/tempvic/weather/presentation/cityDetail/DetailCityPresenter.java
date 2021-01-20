@@ -9,17 +9,22 @@ import java.util.List;
 public class DetailCityPresenter implements DetailCityContract.MvpPresenter{
     private DetailCityContract.MvpView contractView;
     private List<CitiesInfoTable> units;
+    private CitiesInfoTable cityDetail;
 
     @Override
     public void onStart(DetailCityContract.MvpView contractView) {
         this.contractView = contractView;
-        units = MainApplication.database.citiesInfoDao().getAll();
     }
 
     @Override
     public void onMvpViewContextCreated() {
-        contractView.initUi();
         contractView.initAdapterWithDatabase(units);
+    }
+
+    @Override
+    public CitiesInfoTable getDetailsById(int id){
+        cityDetail = MainApplication.database.citiesInfoDao().getById(id);
+        return cityDetail;
     }
 
     @Override
