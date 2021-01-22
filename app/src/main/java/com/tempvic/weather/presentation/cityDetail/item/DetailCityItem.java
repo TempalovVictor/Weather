@@ -7,15 +7,6 @@ public class DetailCityItem implements IBaseListItem {
 
     String month;
     String temperature;
-    /*public Boolean isSelected = false;*/
-
-    /*public boolean isSelected() {
-        return isSelected;
-    }*/
-
-    /*public void setSelected(Boolean selected) {
-        isSelected = selected;
-    }*/
 
     public DetailCityItem(String month, String temperature) {
         this.month = month;
@@ -25,10 +16,6 @@ public class DetailCityItem implements IBaseListItem {
     public String getMonth() {
         return month;
     }
-
-    /*public void setMonth(String month) {
-        this.month = month;
-    }*/
 
     public String getTemperature() {
         return temperature;

@@ -15,6 +15,7 @@
     <string name="tv_season">Сезон</string>
     <string name="tv_temp_scale">Шкала t°</string>
     <string name="tv_result">Результат:</string>
+    <string name="tv_actual_temp">Текущая температура</string>
     <string name="tv_avg_temp">Средняя t°</string>
     <string name="tv_type_of_city">Тип города</string>
     <string name="btn_edit">Редактировать</string>
@@ -29,6 +30,9 @@
     <string name="city_name_hint">Название города</string>
     <string name="temp_in_celsius">t° Цельсий</string>
     <string name="month">Месяц</string>
+    <string name="latitude">Широта</string>
+    <string name="longitude">Долгота</string>
+    <string name="tv_coordinates">Координаты:</string>
 
     <string-array name="seasons">
         <item>Зима</item>

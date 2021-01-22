@@ -32,7 +32,7 @@ import java.util.Objects;
 import static com.tempvic.weather.common.Const.DEFAULT_STRING;
 import static com.tempvic.weather.common.Const.DEFAULT_TABLE_INT;
 
-public class DetailCityFragment extends BaseFragment implements DetailCityContract.MvpView{
+public class DetailCityFragment extends BaseFragment implements DetailCityContract.MvpView {
 
     private DetailCityContract.MvpPresenter presenter = new DetailCityPresenter();
 
@@ -63,26 +63,24 @@ public class DetailCityFragment extends BaseFragment implements DetailCityContra
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         presenter.onMvpViewContextCreated();
-
     }
 
     @Override
-    public void initAdapterWithDatabase(List<CitiesInfoTable> units) {
+    public void initAdapterWithDatabase() {
 
         CitiesInfoTable cityDetail = presenter.getDetailsById(detailCityId);
 
         EditText cityName = getView().findViewById(R.id.et_city_name);
+        EditText latitude = getView().findViewById(R.id.et_latitude);
+        EditText longitude = getView().findViewById(R.id.et_longitude);
         Spinner cityType = getView().findViewById(R.id.sp_type_city);
 
         ArrayAdapter<?> adapterSpinner =
-                ArrayAdapter.createFromResource(getContext(), R.array.type_city, android.R.layout.simple_spinner_item);
+                ArrayAdapter.createFromResource(getContext(),
+                        R.array.type_city,
+                        android.R.layout.simple_spinner_item);
         adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         cityType.setAdapter(adapterSpinner);
-
-        setCityName(cityDetail, cityName, cityType);
-
-        Button buttonSave = getView().findViewById(R.id.btn_save);
 
         RecyclerView recyclerView = Objects.requireNonNull(getActivity()).findViewById(R.id.rv_month_temp);
         DetailCityAdapter adapter = new DetailCityAdapter();
@@ -91,41 +89,48 @@ public class DetailCityFragment extends BaseFragment implements DetailCityContra
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
+        setCityInfo(cityName, latitude, longitude, cityType);
         initItems(adapter, cityDetail);
-        buttonSave.setOnClickListener(v -> handleOnClickSave(cityName, cityType, recyclerView));
+
+        Button buttonSave = getView().findViewById(R.id.btn_save);
+        buttonSave.setOnClickListener(v -> handleOnClickSave(cityName, latitude, longitude, cityType, recyclerView));
     }
 
-    private void setCityName(CitiesInfoTable units, EditText cityName, Spinner cityType) {
+    private void setCityInfo(EditText cityName, EditText latitude, EditText longitude, Spinner cityType) {
         if (detailCityId == DEFAULT_TABLE_INT) {
             cityName.setText(DEFAULT_STRING);
         } else {
-            cityName.setText(units.getCityName());
+            cityName.setText(presenter.getCityName());
+            latitude.setText(presenter.getLatitude());
+            longitude.setText(presenter.getLongitude());
             List<String> arrayType = Arrays.asList(getResources().getStringArray(R.array.type_city));
-            String cityTypeFromDb = units.getCityType();
+            String cityTypeFromDb = presenter.getCityType();
             int position = arrayType.indexOf(cityTypeFromDb);
             cityType.setSelection(position);
         }
     }
 
-    private void initItems(DetailCityAdapter adapter, CitiesInfoTable units) {
+    private void initItems(DetailCityAdapter adapter, CitiesInfoTable cityDetail) {
 
         String[] monthArray = getResources().getStringArray(R.array.array_months);
-        if (units == null || units.getMonthTemp().length == 0) {
+        if (cityDetail == null || presenter.getMonthTemp().length == 0) {
             for (int i = 0; i < 12; i++) {
                 adapter.add(new DetailCityItem(monthArray[i], DEFAULT_STRING));
             }
         } else {
             for (int i = 0; i < 12; i++) {
-                adapter.add(new DetailCityItem(monthArray[i], units.getMonthTemp()[i]));
+                adapter.add(new DetailCityItem(monthArray[i], presenter.getMonthTemp()[i]));
             }
         }
     }
 
-    private void handleOnClickSave(EditText etCityName, Spinner spCityType, RecyclerView recyclerView) {
+    private void handleOnClickSave(EditText etCityName, EditText etLatitude, EditText etLongitude, Spinner spCityType, RecyclerView recyclerView) {
 
         String cityName = etCityName.getText().toString();
         String cityType = spCityType.getSelectedItem().toString();
-
+        double latitude = Double.parseDouble(String.valueOf(etLatitude.getText()));
+        double longitude = Double.parseDouble(String.valueOf(etLongitude.getText()));
+//
         List<CitiesInfoTable> units = MainApplication.database.citiesInfoDao().getAll();
 
         ArrayList<String> cities = new ArrayList<>();
@@ -178,15 +183,18 @@ public class DetailCityFragment extends BaseFragment implements DetailCityContra
                         allMonthItems.get(8).getTemperature(),
                         allMonthItems.get(9).getTemperature(),
                         allMonthItems.get(10).getTemperature(),
-                        allMonthItems.get(11).getTemperature()
+                        allMonthItems.get(11).getTemperature(),
+                        latitude,
+                        longitude
                 );
-
+//
                 MainApplication.database.citiesInfoDao().insert(citiesInfoTable);
 
                 String completeMessage = detailCityId == DEFAULT_TABLE_INT ? "Новый город создан" : "Город обновлен";
                 showMessage(completeMessage);
 
                 if (detailCityId == DEFAULT_TABLE_INT) {
+//
                     detailCityId = MainApplication.database.citiesInfoDao().getId(cityName);
                 }
             }

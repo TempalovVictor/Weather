@@ -23,6 +23,16 @@ public class CitiesInfoTable {
     public String cityTempInOct;
     public String cityTempInNov;
     public String cityTempInDec;
+    public double latitude;
+    public double longitude;
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
 
     public int getCityId() {
         return cityId;
@@ -57,7 +67,8 @@ public class CitiesInfoTable {
             String cityTempInFeb, String cityTempInMar, String cityTempInApr,
             String cityTempInMay, String cityTempInJun, String cityTempInJul,
             String cityTempInAug, String cityTempInSept, String cityTempInOct,
-            String cityTempInNov, String cityTempInDec
+            String cityTempInNov, String cityTempInDec,
+            double latitude, double longitude
     ) {
         this.cityId = cityId;
         this.cityName = cityName;
@@ -74,6 +85,8 @@ public class CitiesInfoTable {
         this.cityTempInOct = cityTempInOct;
         this.cityTempInNov = cityTempInNov;
         this.cityTempInDec = cityTempInDec;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public CitiesInfoTable() {

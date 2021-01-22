@@ -1,5 +1,6 @@
 package com.tempvic.weather.presentation.filter;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,9 +25,21 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class FilterFragment extends BaseFragment implements FilterContract.MvpView {
 
     private ArrayAdapter<String> adapterSpinner;
+    public static String BaseUrl = "http://api.openweathermap.org/";
+    public static String AppId = "2e65127e909e178d0af311a81f39948c";
+    public static String lat;
+    public static String lon;
+
+    private TextView weatherData;
 
     @Override
     public String getFragmentName() {
@@ -52,6 +65,7 @@ public class FilterFragment extends BaseFragment implements FilterContract.MvpVi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         presenter.onMvpViewContextCreated();
+        weatherData = getView().findViewById(R.id.tv_value_actual_temp);
     }
 
     @Override
@@ -71,7 +85,7 @@ public class FilterFragment extends BaseFragment implements FilterContract.MvpVi
         }
     }
 
-    @Override  //У нас тут вроде не только адаптеры, целесообразно ли так называть метод?
+    @Override
     public void initAdapterWithDatabase(List<CitiesInfoTable> units) {
 
         TextView tvAvgTemp = getView().findViewById(R.id.tv_value_temp_avg);
@@ -111,6 +125,9 @@ public class FilterFragment extends BaseFragment implements FilterContract.MvpVi
                     TextView typeCity = getView().findViewById(R.id.tv_value_city_type);
                     typeCity.setText(selectedTable.getCityType());
                     setAvgTemp(spCityName.getSelectedItem().toString(), spSeason.getSelectedItem().toString(), spTempScale.getSelectedItem().toString(), tvAvgTemp);
+                    lat = String.valueOf(selectedTable.getLatitude());
+                    lon = String.valueOf(selectedTable.getLongitude());
+                    getCurrentData();
                 }
             }
 
@@ -152,6 +169,36 @@ public class FilterFragment extends BaseFragment implements FilterContract.MvpVi
             setAvgTemp(spCityName.getSelectedItem().toString(), spSeason.getSelectedItem().toString(), spTempScale.getSelectedItem().toString(), tvAvgTemp);
         }
     }
+
+    void getCurrentData() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BaseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        WeatherService service = retrofit.create(WeatherService.class);
+        Call<WeatherResponse> call = service.getCurrentWeatherData(lat, lon, AppId);
+        call.enqueue(new Callback<WeatherResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<WeatherResponse> call, @NonNull Response<WeatherResponse> response) {
+                if (response.code() == 200) {
+                    WeatherResponse weatherResponse = response.body();
+                    assert weatherResponse != null;
+
+                    double tempInCelsius = weatherResponse.main.temp - 273.15;
+
+                    String currentTemp = String.format("%.2f",tempInCelsius);
+
+                    weatherData.setText(currentTemp);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<WeatherResponse> call, @NonNull Throwable t) {
+                weatherData.setText(t.getMessage());
+            }
+        });
+    }
+
 
     @Override
     public void updateAdapterWithDatabase(List<CitiesInfoTable> units) {

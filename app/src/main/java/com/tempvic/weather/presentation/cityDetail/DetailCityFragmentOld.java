@@ -153,7 +153,8 @@ public class DetailCityFragmentOld extends BaseFragment {
             if (allMonthItems.size() == 0) {
                 showMessage("Ошибка! Заполните значения температур для каждового месяца");
             } else {
-                CitiesInfoTable citiesInfoTable = new CitiesInfoTable(
+                //                                                            ЗАКОММЕНТИРОВАЛ ОШИБКУ
+/*                CitiesInfoTable citiesInfoTable = new CitiesInfoTable(
                         detailCityId,
                         cityName,
                         cityType,
@@ -171,7 +172,7 @@ public class DetailCityFragmentOld extends BaseFragment {
                         allMonthItems.get(11).getTemperature()
                 );
 
-                MainApplication.database.citiesInfoDao().insert(citiesInfoTable);
+                MainApplication.database.citiesInfoDao().insert(citiesInfoTable);*/
 
                 String completeMessage = detailCityId == DEFAULT_TABLE_INT ? "Новый город создан" : "Город обновлен";
                 showMessage(completeMessage);
