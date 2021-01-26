@@ -1,8 +1,8 @@
 package com.tempvic.weather.presentation.filter;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tempvic.weather.R;
 import com.tempvic.weather.presentation.base.NavigationHelper;
@@ -25,19 +26,20 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
+import static android.content.ContentValues.TAG;
 
 public class FilterFragment extends BaseFragment implements FilterContract.MvpView {
 
     private ArrayAdapter<String> adapterSpinner;
-    public static String BaseUrl = "http://api.openweathermap.org/";
-    public static String AppId = "2e65127e909e178d0af311a81f39948c";
-    public static String lat;
-    public static String lon;
+    private final static String AppId = "2e65127e909e178d0af311a81f39948c";
+    private static String lat;
+    private static String lon;
 
     private TextView weatherData;
 
@@ -171,34 +173,34 @@ public class FilterFragment extends BaseFragment implements FilterContract.MvpVi
     }
 
     void getCurrentData() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BaseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        WeatherService service = retrofit.create(WeatherService.class);
-        Call<WeatherResponse> call = service.getCurrentWeatherData(lat, lon, AppId);
-        call.enqueue(new Callback<WeatherResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<WeatherResponse> call, @NonNull Response<WeatherResponse> response) {
-                if (response.code() == 200) {
-                    WeatherResponse weatherResponse = response.body();
-                    assert weatherResponse != null;
+        WeatherService weatherService = MainApplication.getApi();
+        Observable<WeatherResponse> observable = weatherService.getCurrentWeatherData(lat, lon, AppId);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<WeatherResponse>() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+                        Log.d(TAG, "onNext: $d");
+                    }
 
-                    double tempInCelsius = weatherResponse.main.temp - 273.15;
+                    @Override
+                    public void onNext(@io.reactivex.rxjava3.annotations.NonNull WeatherResponse weatherResponse) {
+                        long tempInCelsius = Math.round(weatherResponse.main.temp - 273.15);
+                        String currentTemp = String.valueOf(tempInCelsius);
+                        weatherData.setText(currentTemp);
+                    }
 
-                    String currentTemp = String.format("%.2f",tempInCelsius);
+                    @Override
+                    public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+                        Toast.makeText(getActivity(), "Ошибка отображения текущей температуры!", Toast.LENGTH_SHORT).show();
+                    }
 
-                    weatherData.setText(currentTemp);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<WeatherResponse> call, @NonNull Throwable t) {
-                weatherData.setText(t.getMessage());
-            }
-        });
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "Completed");
+                    }
+                });
     }
-
 
     @Override
     public void updateAdapterWithDatabase(List<CitiesInfoTable> units) {
