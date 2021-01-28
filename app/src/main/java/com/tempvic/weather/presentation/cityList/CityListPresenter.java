@@ -17,6 +17,7 @@ public class CityListPresenter implements CityListContract.MvpPresenter {
 
     @Override
     public void onMvpViewContextCreated() {
+        units = MainApplication.database.citiesInfoDao().getAll();
         contractView.initAdapterWithDatabase(units);
     }
 

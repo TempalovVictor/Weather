@@ -40,11 +40,10 @@ public class MainApplication extends Application {
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
         weatherService = retrofit.create(WeatherService.class);
     }
 
-    public static WeatherService getApi() {
+    public static WeatherService getWeatherService() {
         return weatherService;
     }
 }

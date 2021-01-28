@@ -18,18 +18,6 @@ public abstract class BaseFragment extends Fragment {
     public abstract String getFragmentName();
 
     @Override
-    public void onStart() {
-        super.onStart();
-        //TODO здесь нужно будет вызвать onViewAttach
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        //TODO здесь нужно будет вызвать onViewDetach
-    }
-
-    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         checkThemeColor();
@@ -37,7 +25,6 @@ public abstract class BaseFragment extends Fragment {
 
     public void onBackPressedCallback() {
     }
-
 
     public void checkThemeColor() {
         switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {

@@ -2,6 +2,8 @@ package com.tempvic.weather.presentation.cityDetail;
 
 import com.tempvic.weather.data.database.CitiesInfoTable;
 
+import java.util.List;
+
 public final class DetailCityContract {
     public interface MvpView {
 

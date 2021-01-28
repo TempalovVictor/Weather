@@ -111,7 +111,6 @@ public class FilterFragment extends BaseFragment implements FilterContract.MvpVi
 
         spCityName.setAdapter(adapterSpinner);
 
-
         spCityName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -173,7 +172,7 @@ public class FilterFragment extends BaseFragment implements FilterContract.MvpVi
     }
 
     void getCurrentData() {
-        WeatherService weatherService = MainApplication.getApi();
+        WeatherService weatherService = MainApplication.getWeatherService();
         Observable<WeatherResponse> observable = weatherService.getCurrentWeatherData(lat, lon, AppId);
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -16,7 +16,7 @@ public class DetailCityPresenter implements DetailCityContract.MvpPresenter{
     @Override
     public void onStart(DetailCityContract.MvpView contractView) {
         this.contractView = contractView;
-        units = MainApplication.database.citiesInfoDao().getAll();
+        //units = MainApplication.database.citiesInfoDao().getAll();
     }
 
     @Override
