@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.tempvic.weather.presentation.main.MainActivity;
 import com.tempvic.weather.presentation.main.MainApplication;
 import com.tempvic.weather.R;
 import com.tempvic.weather.presentation.cityDetail.item.DetailCityAdapter;

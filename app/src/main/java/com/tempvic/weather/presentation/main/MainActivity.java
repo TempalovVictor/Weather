@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         if (getSupportFragmentManager().getBackStackEntryCount() == 0 || getSupportFragmentManager().getBackStackEntryCount() == 1) {
             finish();
         } else {
+            mTag = getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 1).getName();
             findCurrentFragment().onBackPressedCallback();
             super.onBackPressed();
         }

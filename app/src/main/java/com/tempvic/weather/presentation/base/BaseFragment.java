@@ -3,9 +3,7 @@ package com.tempvic.weather.presentation.base;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.Objects;
 

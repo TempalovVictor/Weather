@@ -23,7 +23,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class FilterFragmentOld extends BaseFragment  {
+public class FilterFragmentOld extends BaseFragment {
 
     @Override
     public String getFragmentName() {

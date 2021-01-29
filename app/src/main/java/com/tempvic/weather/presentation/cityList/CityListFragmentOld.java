@@ -101,7 +101,7 @@ public class CityListFragmentOld extends BaseFragment {
 
         editButton.setOnClickListener(v -> {
             int selectedItem = findSelectedItemId(items);
-            if(selectedItem != 0){
+            if (selectedItem != 0) {
                 showDetailCityFragment(selectedItem);
             } else {
                 Toast toast = Toast.makeText(getContext(),

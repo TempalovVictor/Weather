@@ -1,13 +1,12 @@
 package com.tempvic.weather.presentation.cityDetail;
 
-
 import com.tempvic.weather.data.database.CitiesInfoDao;
 import com.tempvic.weather.data.database.CitiesInfoTable;
 import com.tempvic.weather.presentation.main.MainApplication;
 
 import java.util.List;
 
-public class DetailCityPresenter implements DetailCityContract.MvpPresenter{
+public class DetailCityPresenter implements DetailCityContract.MvpPresenter {
     private DetailCityContract.MvpView contractView;
     private List<CitiesInfoTable> units;
     private CitiesInfoTable cityDetail;
@@ -25,23 +24,23 @@ public class DetailCityPresenter implements DetailCityContract.MvpPresenter{
     }
 
     @Override
-    public CitiesInfoTable getDetailsById(int id){
+    public CitiesInfoTable getDetailsById(int id) {
         cityDetail = MainApplication.database.citiesInfoDao().getById(id);
         return cityDetail;
     }
 
     @Override
-    public String getCityName(){
+    public String getCityName() {
         return cityDetail.getCityName();
     }
 
     @Override
-    public String[] getMonthTemp(){
+    public String[] getMonthTemp() {
         return cityDetail.getMonthTemp();
     }
 
     @Override
-    public String getCityType(){
+    public String getCityType() {
         return cityDetail.getCityType();
     }
 
